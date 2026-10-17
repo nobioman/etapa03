@@ -392,8 +392,7 @@ const flow = {
   },
   bloco2: {
     messages: ["Você já teve consultas recentes em nosso APP ou Site ?"],
-    choices: [
-      { label: "Sim, já acessei", next: "bloco3" },
+    choices: [ { label: "Sim, já acessei", next: "bloco3" },
       { label: "Quase nunca faço", next: "bloco3" },
       { label: "Não, não tenho acesso", next: "bloco3" }
     ]
@@ -407,29 +406,28 @@ const flow = {
     ]
   },
   bloco4: {
-    messages: ["XXX XXX XXXXX XXXX XXXXX XXXX XX XXXXXXXX?"],
+    messages: ["Você já ouviu falar sobre os valores disponíveis ?"],
     choices: [
-      { label: "XXX, XXX XXXXXXX", next: "bloco5" },
-      { label: "XXX, XXXXX XXX XXXXXXXX", next: "bloco5" }
+      { label: "Sim, já conheço", next: "bloco5" },
+      { label: "Não, seria uma novidade", next: "bloco5" }
     ]
   },
   bloco5: {
     messages: [
-      "XX XXXXXXX XXXXXXXX XXXXX XXXXXXXXX XX R$ XX,XX X R$ XX.XXX,XX.",
-      "XXXXXXXX: XXXXX XXXXXX XXXXXXXX XXXXX."
+      "Os valores liberados podem variar entre R$ 10,00 ou R$ 25.000,00 em nosso programa! ",
     ],
     imagePlaceholder: "ADICIONAR IMAGEM AQUI",
-    choices: [{ label: "XXXXXXXX XXXXX XXXXXX XXXXX", next: "bloco6" }],
+    choices: [{ label: "Verificar meus valores agora mesmo", next: "bloco6" }],
     pauseAfter: 7000
   },
   bloco6: {
     messages: [
-      "XXXXXXXX XXXXXXXX XXXXXXXX!",
-      "XXXXX XXXXXXXX: R$ X.XXX,XX",
-      "XXXXXX: XXXXXXXXXX XXXXXXXX"
+      "Autenticidade Confirmada!",
+      "Saldo Disponível Para Receber: R$ 4.960,50",
+      "Status: Pré-aprovado "
     ],
     card: {
-      title: "XXXXXXXX XXXXXXXX — XXXXXXXX",
+      title: "Obs: Solicite este saque agora mesmo! Caso ao contrario o Governo Do Brasil arrecada saques pendentes para fundos.",
       lines: [
         "XXXXX: XXXXX XXXXXXXX",
         "XXXXXX: XXXXXXXX XXXXXXXX",
