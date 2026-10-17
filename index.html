@@ -391,19 +391,19 @@ const flow = {
     choices: [{ label: "Continuar", next: "bloco2" }]
   },
   bloco2: {
-    messages: ["XXX XXX XXXX XXXXXXXX XXXXXXXX XX XXXXX APP XX XXXX?"],
+    messages: ["Você já teve consultas recentes em nosso APP ou Site ?"],
     choices: [
-      { label: "XXX, XXX XXXXXXX", next: "bloco3" },
-      { label: "XXXXX XXXXX", next: "bloco3" },
-      { label: "XXX, XXX XXX XXXXXXX", next: "bloco3" }
+      { label: "Sim, já acessei", next: "bloco3" },
+      { label: "Quase nunca faço", next: "bloco3" },
+      { label: "Não, não tenho acesso", next: "bloco3" }
     ]
   },
   bloco3: {
-    messages: ["XXXX XXX XXXXXXX XXXXX?"],
+    messages: ["Qual seu estado civil ?"],
     choices: [
-      { label: "XXXXXXX(X)", next: "bloco4" },
-      { label: "XXXXXXX(X)", next: "bloco4" },
-      { label: "XXXXX(X)", next: "bloco4" }
+      { label: "Casado(a)", next: "bloco4" },
+      { label: "Solteiro(a)", next: "bloco4" },
+      { label: "Viúvo(a)", next: "bloco4" }
     ]
   },
   bloco4: {
