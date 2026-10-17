@@ -384,11 +384,13 @@ const restartButton = document.querySelector("#restart");
 const flow = {
   bloco1: {
     messages: [
-      "XXX, XXX XXXXX-BXXXX!",
-      "XXX XXXXXXXX XXX XXXXXXXX XXX XXXXXXXX XXXXXXXX XXXXXX XXXXXXXX.",
-      "XXXXXXXX XX XXXXXXXX X XXXXXXXX XXXXX."
+      "Olá, Seja Bem-vindo!",
+      "Nos próximos passos vou te auxiliar a resgatar seus valores a receber.",
+      "Nos últimos dias, milhares de brasileiros conseguiram sacar esses valores esquecidos em contas bancarias."
+      "Responda às perguntas a seguir para aprovação."
+
     ],
-    choices: [{ label: "XXXXXXXX", next: "bloco2" }]
+    choices: [{ label: "Continuar", next: "bloco2" }]
   },
   bloco2: {
     messages: ["XXX XXX XXXX XXXXXXXX XXXXXXXX XX XXXXX APP XX XXXX?"],
