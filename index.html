@@ -384,125 +384,147 @@ const restartButton = document.querySelector("#restart");
 const flow = {
   bloco1: {
     messages: [
-      "Olá, Seja Bem-vindo!",
-      "Nos próximos passos vou te auxiliar a resgatar seus valores a receber.",
-      "Nos últimos dias, milhares de brasileiros conseguiram sacar esses valores esquecidos em contas bancarias, responda às perguntas a seguir para aprovação.",
+      "XXX, XXX XXXXX-BXXXX!",
+      "XXX XXXXXXXX XXX XXXXXXXX XXX XXXXXXXX XXXXXXXX XXXXXX XXXXXXXX.",
+      "XXXXXXXX XX XXXXXXXX X XXXXXXXX XXXXX."
     ],
-    choices: [
-      { label: "Continuar", next: "bloco2" }
-    ],
+    choices: [{ label: "XXXXXXXX", next: "bloco2" }]
   },
-
   bloco2: {
-    messages: [
-      "Você já teve consultas recentes em nosso APP ou Site Serasa Experian ?"
-    ],
+    messages: ["XXX XXX XXXX XXXXXXXX XXXXXXXX XX XXXXX APP XX XXXX?"],
     choices: [
-      { label: "Sim, já acessei", next: "bloco3" },
-      { label: "Não, não tenho acesso", next: "bloco3" }
-    ],
-  },
-
-  bloco3: {
-    messages: [
-      "Qual seu estado civil ?",
-    ],
-    choices: [
-      { label: "Casado(a)", next: "bloco4" },
-      { label: "Solteiro(a)", next: "bloco4" }
-      { label: "Viúvo(a)", next: "bloco4" }
-    ],
-  },
-
-  bloco4: {
-    messages: [
-      "Você já ouviu falar sobre os valores disponíveis ?",
-    ],
-    choices: [
-      { label: "Sim, já conheço", next: "bloco5" }
-      { label: "Não, seria uma novidade", next: "bloco5" }
+      { label: "XXX, XXX XXXXXXX", next: "bloco3" },
+      { label: "XXXXX XXXXX", next: "bloco3" },
+      { label: "XXX, XXX XXX XXXXXXX", next: "bloco3" }
     ]
   },
-
+  bloco3: {
+    messages: ["XXXX XXX XXXXXXX XXXXX?"],
+    choices: [
+      { label: "XXXXXXX(X)", next: "bloco4" },
+      { label: "XXXXXXX(X)", next: "bloco4" },
+      { label: "XXXXX(X)", next: "bloco4" }
+    ]
+  },
+  bloco4: {
+    messages: ["XXX XXX XXXXX XXXX XXXXX XXXX XX XXXXXXXX?"],
+    choices: [
+      { label: "XXX, XXX XXXXXXX", next: "bloco5" },
+      { label: "XXX, XXXXX XXX XXXXXXXX", next: "bloco5" }
+    ]
+  },
   bloco5: {
     messages: [
-      "Nossos valores liberados podem variar entre R$ 10,00 ou R$ 25.000,00 dentro deste programa!",
-      "Milhares de Brasileiros conseguiram e agora você pode se encaixar!"
+      "XX XXXXXXX XXXXXXXX XXXXX XXXXXXXXX XX R$ XX,XX X R$ XX.XXX,XX.",
+      "XXXXXXXX: XXXXX XXXXXX XXXXXXXX XXXXX."
     ],
-    imagePlaceholder: "Verificar meus valores agora mesmo",
-    choices: [
-      { label: "Verificar", next: "bloco6" }
-    ],
+    imagePlaceholder: "ADICIONAR IMAGEM AQUI",
+    choices: [{ label: "XXXXXXXX XXXXX XXXXXX XXXXX", next: "bloco6" }],
+    pauseAfter: 7000
   },
-
   bloco6: {
     messages: [
-      "Autenticidade confirmada!",
-      "Saldo Disponível Para Receber: R$ 4.960,50"
+      "XXXXXXXX XXXXXXXX XXXXXXXX!",
+      "XXXXX XXXXXXXX: R$ X.XXX,XX",
+      "XXXXXX: XXXXXXXXXX XXXXXXXX"
     ],
     card: {
-      title: "Acabamos de salvar e verificar suas informações com sucesso! Iremos iniciar a etapa da sua Indenização e chave Pix.",
+      title: "XXXXXXXX XXXXXXXX — XXXXXXXX",
       lines: [
-        "Status: demonstração concluída",
-        "Valor: não calculado",
-        "Elegibilidade: não verificada",
-        "Protocolo: EXEMPLO-0000",
-        "Este cartão não é um documento oficial."
+        "XXXXX: XXXXX XXXXXXXX",
+        "XXXXXX: XXXXXXXX XXXXXXXX",
+        "XXXXXXXX: XXXXXXXX XXXXXXXX",
+        "XXXX XXXXXXXXXX XXX X XXXXXXXXXX XXX XXXXXXXX."
       ]
     },
-    choices: [
-      { label: "Continuar", next: "bloco7" }
-    ],
+    choices: [{ label: "XXXXXXXX", next: "bloco7" }]
   },
-
   bloco7: {
-    messages: [o
-      "ETAPA 5 — Personalização da interface",
-      "Se desejar, digite um nome fictício para visualizar uma interação personalizada. O campo é opcional."
-    ],
-    input: {
-      label: "Nome fictício (opcional)",
-      placeholder: "Ex.: Maria",
-      button: "Continuar",
-      next: "bloco8"
-    },
-    choices: [
-      { label: "Pular esta etapa", next: "bloco8" }
-    ],
-  },
-
-  bloco8: {
     messages: [
-      "Pronto! Você avançou na demonstração.",
-      "O texto inserido no campo anterior não é enviado a nenhum órgão ou serviço por este código.",
-      "Lembre-se de nunca informar senhas, códigos de autenticação, dados bancários ou chaves Pix em páginas desconhecidas."
+      "X XXXXXXX XXXXX XXXXXXX XXXXXXXXX XX XXXX XXX.",
+      "XXXX XXXXX XXXXXXX XXXXXXXX?"
     ],
     choices: [
-      { label: "Ver orientação final", next: "bloco9" }
-    ],
+      { label: "XXXXXXX XX XXXXXXXX", next: "bloco8" },
+      { label: "XXX XXXXXXXX", next: "bloco8" },
+      { label: "XXXXX", next: "bloco8" }
+    ]
   },
-
+  bloco8: {
+    messages: ["XXXXXX XXX XXXXX XXXXXXXX:"],
+    input: {
+      label: "XXXXXX XXXXXXXX (use somente texto fictício)",
+      placeholder: "XXXXXXXX@XXXXXXXXXXXXXXX.XXX",
+      button: "XXXXXXXX",
+      next: "bloco9"
+    },
+    choices: [{ label: "XXXXXXXX XXXXX XXXX", next: "bloco9" }]
+  },
   bloco9: {
     messages: [
-      "ORIENTAÇÃO DE SEGURANÇA",
-      "Para conferir informações sobre benefícios ou valores, procure o site ou aplicativo oficial da instituição responsável.",
-      "Não confie apenas em links recebidos por mensagens e não pague valores antecipados para liberar supostos benefícios."
+      "XXXXXX: XXXXXXX XX XXXXXX XXX XXXXX XXXXXXXX.",
+      "XXXXX XXXXXXXX: XXXXX XXXXX XXXXXXXX.",
+      "XXXXXXX XX XXXX: XXX, XXXX XXXXXXX."
     ],
-    choices: [
-      { label: "Concluir demonstração", next: "bloco10" }
-    ],
+    choices: [{ label: "XXXXXXXX", next: "bloco10" }],
+    pauseAfter: 3000
   },
-
   bloco10: {
     messages: [
-      "Demonstração concluída! Obrigado por participar.",
-      "Esta página é ilustrativa. Nenhum benefício, indenização, saldo ou pagamento foi consultado, aprovado ou liberado."
+      "XXXXXXX XXXXXX XXXXXXXX XXXXXXXX XXXXXXXXX XXXXXX XXXXX..."
     ],
-    choices: [
-      { label: "Recomeçar", next: "bloco1" }
+    choices: [{ label: "XXXXXXXX", next: "bloco11" }],
+    pauseAfter: 4000
+  },
+  bloco11: {
+    messages: [
+      "XXXXXXXX XXXXXXXX XXX XXXXXXXX!",
+      "XXXXX: XXXXXXXXX@XXXXXXXXXXXXXXX.XXX",
+      "XXXXXX: XXXXXXXXXXXXX XXXXXXXX"
     ],
+    choices: [{ label: "XXXXXXXX", next: "bloco12" }]
+  },
+  bloco12: {
+    messages: [
+      "XXXXX XX XXXXXXX XXXXXXX XXXX XXXXXXXX XXXXXXXXXXX.",
+      "XXXXXXX XX XXXX: XXXXXXX XXXXXXXXX XXXX XXXXX"
+    ],
+    choices: [{ label: "XXXXXXXX", next: "bloco13" }],
+    pauseAfter: 3000
+  },
+  bloco13: {
+    messages: ["XXXXXXXXXX XX XXXXXXXX — XXXXXXXX"],
+    imagePlaceholder: "ADICIONAR IMAGEM DO COMPROVANTE AQUI",
+    card: {
+      title: "XXXXXXXXXX XX XXXXXXXX — XXXXXXXX",
+      lines: [
+        "XXXXX XXXXXXXXX: R$ X.XXX,XX",
+        "XXXXX XXX: XXXXXXXXX@XXXXXXXXXXXXXXX.XXX",
+        "XXXXX: XXXXXXX XXXXXXXX XXXXX XXXXXXXX"
+      ]
+    },
+    choices: [{ label: "XXXXXXXX", next: "bloco14" }]
+  },
+  bloco14: {
+    messages: [
+      "XXXX XXX XXX XXX XXX XXXXX XXXXX?",
+      "XXXXXXX XXXXXXXXXX XX XXXXXXX:",
+      "XXX X XXXXXXXXXX XXXXX XXXX XXX XXXXXXX XXXXXXX XXXXX XXXXXXXX.",
+      "XXXX XXXXXXXX XXXXXXX, XXXXXXXX XX XXXXX XXX XXXXXXXX X XXXXXXXX XXXXXXXX."
+    ],
+    choices: [{ label: "XXXXXXXX XXXXXXXX", next: "bloco15" }],
+    pauseAfter: 3000
+  },
+  bloco15: {
+    messages: [
+      "XXX XXXXXXXXXXX XXX XXXXXXXX!",
+      "XXXXXXX XX XXXX: XXXXXXXX XXXXXXXX"
+    ],
+    choices: [{ label: "XXXXXXXX", next: "bloco1" }],
+    pauseAfter: 2000
   }
 };
+
 
 let stepToken = 0;
 let activeTimers = [];
