@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#EC0075">
+  <title>Atendimento Interativo — Simulação Educativa</title>
+  <style>
+    :root {
+      --pink: #EC0075;
+      --pink-dark: #c90063;
+      --pink-soft: #fff0f7;
+      --ink: #252631;
+      --muted: #687080;
+      --bubble: #f4f5fa;
+      --line: #e6e7ed;
+      --white: #fff;
+      --shadow: 0 8px 24px rgba(35, 20, 45, .08);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #f7f7fa;
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+    button { font: inherit; }
+    .app {
+      width: min(100%, 560px);
+      min-height: 100vh;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      background: var(--white);
+      box-shadow: 0 0 32px rgba(30, 20, 40, .06);
+    }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      padding: 15px 18px 12px;
+      background: rgba(255,255,255,.96);
+      border-bottom: 3px solid var(--pink);
+      backdrop-filter: blur(10px);
+    }
+    .brand-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .brand {
+      display: flex; align-items: center; gap: 9px;
+      color: var(--pink); font-size: 1.28rem; font-weight: 850; letter-spacing: -.04em;
+    }
+    .brand-mark {
+      display: grid; place-items: center; width: 35px; height: 35px;
+      border-radius: 11px; background: var(--pink); color: white;
+      font-size: 1rem; letter-spacing: 0;
+    }
+    .demo-pill {
+      color: var(--pink-dark); background: var(--pink-soft);
+      border: 1px solid #ffd0e5; border-radius: 999px;
+      padding: 6px 10px; font-size: .72rem; font-weight: 800;
+      white-space: nowrap;
+    }
+    .breadcrumb { margin-top: 10px; color: var(--muted); font-size: .78rem; }
+    .notice {
+      margin: 14px 14px 0; padding: 10px 12px;
+      border: 1px solid #ffd0e5; background: var(--pink-soft);
+      border-radius: 12px; color: #7d1748; font-size: .78rem;
+    }
+    .notice strong { color: var(--pink-dark); }
+    main { flex: 1; padding: 16px 14px 22px; }
+    #chat { display: flex; flex-direction: column; gap: 10px; }
+    .message {
+      max-width: 88%; padding: 12px 14px; border-radius: 18px;
+      font-size: .96rem; overflow-wrap: anywhere;
+      animation: appear .22s ease-out both;
+    }
+    .message.bot {
+      align-self: flex-start; background: var(--bubble);
+      border-top-left-radius: 6px;
+    }
+    .message.user {
+      align-self: flex-end; color: white; background: var(--pink);
+      border-bottom-right-radius: 6px;
+    }
+    .message strong { font-weight: 750; }
+    .message small { display: block; opacity: .72; margin-top: 5px; font-size: .72rem; }
+    .message .info-card {
+      margin-top: 9px; padding: 12px; background: white;
+      border: 1px solid var(--line); border-radius: 12px;
+    }
+    .info-card .card-title { font-weight: 800; color: var(--pink-dark); margin-bottom: 4px; }
+    .info-card p { margin: 4px 0; font-size: .88rem; }
+    .choices {
+      display: flex; flex-direction: column; gap: 9px;
+      margin: 2px 0 8px; align-items: stretch;
+      animation: appear .22s ease-out both;
+    }
+    .choices-label { color: var(--muted); font-size: .78rem; padding: 0 3px; }
+    .choice {
+      text-align: left; padding: 12px 14px; border: 1px solid #f1b5d2;
+      border-radius: 14px; background: white; color: var(--ink);
+      cursor: pointer; transition: transform .15s, background .15s, border-color .15s;
+      display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    }
+    .choice::after { content: "›"; color: var(--pink); font-size: 1.35rem; line-height: 1; }
+    .choice:hover { border-color: var(--pink); background: var(--pink-soft); }
+    .choice:active { transform: scale(.99); }
+    .choice:focus-visible, .restart:focus-visible { outline: 3px solid #f7a5cd; outline-offset: 2px; }
+    .typing { display: flex; align-items: center; gap: 5px; min-width: 58px; }
+    .typing span { width: 6px; height: 6px; border-radius: 50%; background: #9a9eaa; animation: bounce .9s infinite ease-in-out; }
+    .typing span:nth-child(2) { animation-delay: .12s; }
+    .typing span:nth-child(3) { animation-delay: .24s; }
+    .footer {
+      padding: 13px 16px 17px; border-top: 1px solid var(--line);
+      color: var(--muted); text-align: center; font-size: .74rem; background: #fff;
+    }
+    .restart {
+      margin-top: 8px; border: 0; background: transparent; color: var(--pink-dark);
+      font-weight: 750; cursor: pointer; padding: 5px 8px;
+    }
+    @keyframes appear { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes bounce { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-5px); } }
+    @media (min-width: 600px) {
+      body { padding: 22px 0; }
+      .app { min-height: calc(100vh - 44px); border: 1px solid var(--line); border-radius: 20px; overflow: hidden; }
+      header { position: relative; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div class="brand-row">
+        <div class="brand"><span class="brand-mark" aria-hidden="true">↗</span> Guia Interativo</div>
+        <span class="demo-pill">SIMULAÇÃO EDUCATIVA</span>
+      </div>
+      <div class="breadcrumb">Início&nbsp; › &nbsp;Demonstração de atendimento</div>
+    </header>
+
+    <div class="notice">
+      <strong>Ambiente demonstrativo:</strong> página independente, sem vínculo com gov.br ou órgão público.
+      Não informe CPF, senhas, chave PIX ou outros dados pessoais.
+    </div>
+
+    <main>
+      <section id="chat" aria-live="polite" aria-label="Conversa demonstrativa"></section>
+      <section id="options" class="choices" aria-label="Escolha uma resposta"></section>
+    </main>
+
+    <footer class="footer">
+      Protótipo para aprendizado de interfaces de conversa.
+      <br>
+      <button class="restart" id="restart" type="button">↻ Reiniciar demonstração</button>
+    </footer>
+  </div>
+
+  <script>
+    const chat = document.querySelector("#chat");
+    const options = document.querySelector("#options");
+    const restartButton = document.querySelector("#restart");
+
+    // Cada etapa tem uma mensagem e opções pré-definidas. O visitante não digita texto livre.
+    const flow = {
+      inicio: {
+        messages: [
+          "Olá! Seja bem-vindo(a) ao Guia Interativo.",
+          "Esta demonstração mostra como um atendimento por etapas pode funcionar. Você só precisa escolher uma das respostas disponíveis.",
+          "Qual tema educativo deseja explorar?"
+        ],
+        choices: [
+          { label: "Como consultar informações com segurança", next: "consulta" },
+          { label: "Como reconhecer possíveis golpes", next: "golpes" }
+        ]
+      },
+      consulta: {
+        messages: [
+          "Vamos falar sobre consultas seguras.",
+          "Para informações sobre serviços públicos, digite o endereço oficial diretamente no navegador e confira o domínio antes de entrar.",
+          "Como você gostaria de continuar?"
+        ],
+        choices: [
+          { label: "Ver uma lista de cuidados", next: "cuidados" },
+          { label: "Aprender a verificar um site", next: "site" }
+        ]
+      },
+      golpes: {
+        messages: [
+          "Ótima escolha. Mensagens que prometem dinheiro imediato ou exigem uma taxa para liberar valores merecem atenção.",
+          "Não clique em links inesperados nem forneça dados pessoais em páginas recebidas por mensagem.",
+          "O que você quer ver agora?"
+        ],
+        choices: [
+          { label: "Sinais de alerta comuns", next: "alertas" },
+          { label: "O que fazer diante de uma suspeita", next: "suspeita" }
+        ]
+      },
+      cuidados: {
+        messages: [
+          "Confira estes cuidados básicos:"
+        ],
+        card: {
+          title: "Checklist de segurança",
+          lines: [
+            "Acesse o portal oficial digitando o endereço por conta própria.",
+            "Nunca compartilhe senha, código de autenticação ou dados bancários em um chat.",
+            "Desconfie de urgência, promessas de pagamento garantido ou cobrança antecipada.",
+            "Em caso de dúvida, procure os canais oficiais de atendimento."
+          ]
+        },
+        choices: [
+          { label: "Voltar ao início", next: "inicio" },
+          { label: "Ver sinais de golpe", next: "golpes" }
+        ]
+      },
+      site: {
+        messages: [
+          "Antes de inserir qualquer informação, confira cuidadosamente o endereço do site.",
+          "Um cadeado no navegador, sozinho, não garante que a página seja legítima. Pesquise o canal oficial por uma fonte confiável e confira se o endereço corresponde exatamente."
+        ],
+        choices: [
+          { label: "Ver checklist de segurança", next: "cuidados" },
+          { label: "Voltar ao início", next: "inicio" }
+        ]
+      },
+      alertas: {
+        messages: [
+          "Fique atento(a) a estes sinais:"
+        ],
+        card: {
+          title: "Possíveis sinais de golpe",
+          lines: [
+            "Promessa de valor alto ou aprovação garantida sem explicação verificável.",
+            "Pedido de PIX, taxa ou depósito para liberar um suposto benefício.",
+            "Solicitação de CPF, nome da mãe, senha ou código por um link recebido.",
+            "Uso de logotipos oficiais em páginas cujo endereço não é oficial."
+          ]
+        },
+        choices: [
+          { label: "O que fazer se suspeitar", next: "suspeita" },
+          { label: "Voltar ao início", next: "inicio" }
+        ]
+      },
+      suspeita: {
+        messages: [
+          "Interrompa a conversa e não faça pagamentos nem compartilhe informações.",
+          "Se você já informou dados ou fez um pagamento, entre em contato com seu banco pelos canais oficiais e procure orientação nos órgãos competentes. Guarde comprovantes e mensagens."
+        ],
+        choices: [
+          { label: "Ver sinais de alerta", next: "alertas" },
+          { label: "Finalizar demonstração", next: "fim" }
+        ]
+      },
+      fim: {
+        messages: [
+          "Demonstração concluída!",
+          "Este protótipo não consulta cadastros, não verifica identidade e não libera ou confirma valores. Ele serve apenas para demonstrar um fluxo de chat com respostas selecionáveis."
+        ],
+        choices: [
+          { label: "Recomeçar", next: "inicio" }
+        ]
+      }
+    };
+
+    let stepToken = 0;
+
+    function addMessage(text, who = "bot") {
+      const message = document.createElement("div");
+      message.className = `message ${who}`;
+      message.textContent = text;
+      chat.appendChild(message);
+      scrollToLatest();
+    }
+
+    function addCard(card) {
+      const message = document.createElement("div");
+      message.className = "message bot";
+      const wrapper = document.createElement("div");
+      wrapper.className = "info-card";
+      const title = document.createElement("div");
+      title.className = "card-title";
+      title.textContent = card.title;
+      wrapper.appendChild(title);
+
+      const list = document.createElement("ul");
+      list.style.paddingLeft = "19px";
+      list.style.margin = "7px 0 0";
+      card.lines.forEach(line => {
+        const item = document.createElement("li");
+        item.style.marginTop = "6px";
+        item.textContent = line;
+        list.appendChild(item);
+      });
+      wrapper.appendChild(list);
+      message.appendChild(wrapper);
+      chat.appendChild(message);
+      scrollToLatest();
+    }
+
+    function showTyping() {
+      const typing = document.createElement("div");
+      typing.className = "message bot";
+      typing.setAttribute("aria-label", "Preparando próxima mensagem");
+      typing.innerHTML = '<div class="typing" aria-hidden="true"><span></span><span></span><span></span></div>';
+      chat.appendChild(typing);
+      scrollToLatest();
+      return typing;
+    }
+
+    function renderStep(key) {
+      const token = ++stepToken;
+      const step = flow[key];
+      options.replaceChildren();
+      options.hidden = true;
+
+      let delay = 180;
+      step.messages.forEach(message => {
+        setTimeout(() => {
+          if (token === stepToken) addMessage(message);
+        }, delay);
+        delay += 520;
+      });
+
+      setTimeout(() => {
+        if (token !== stepToken) return;
+        if (step.card) addCard(step.card);
+        options.replaceChildren();
+
+        const label = document.createElement("div");
+        label.className = "choices-label";
+        label.textContent = "Selecione uma opção para continuar:";
+        options.appendChild(label);
+
+        step.choices.forEach(choice => {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "choice";
+          button.textContent = choice.label;
+          button.addEventListener("click", () => choose(choice));
+          options.appendChild(button);
+        });
+        options.hidden = false;
+        scrollToLatest();
+      }, delay + (step.card ? 120 : 0));
+    }
+
+    function choose(choice) {
+      // Desabilita opções imediatamente para impedir cliques duplicados.
+      [...options.querySelectorAll("button")].forEach(button => button.disabled = true);
+      addMessage(choice.label, "user");
+      options.replaceChildren();
+      options.hidden = true;
+      const typing = showTyping();
+      const currentToken = ++stepToken;
+      setTimeout(() => {
+        if (currentToken !== stepToken) return;
+        typing.remove();
+        renderStep(choice.next);
+      }, 550);
+    }
+
+    function scrollToLatest() {
+      requestAnimationFrame(() => {
+        window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+      });
+    }
+
+    function start() {
+      stepToken++;
+      chat.replaceChildren();
+      options.replaceChildren();
+      options.hidden = true;
+      renderStep("inicio");
+    }
+
+    restartButton.addEventListener("click", start);
+    start();
+  </script>
+</body>
+</html>
