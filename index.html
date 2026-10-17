@@ -1,10 +1,12 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#EC0075">
   <title>Atendimento Interativo — Simulação Educativa</title>
+
   <style>
     :root {
       --pink: #EC0075;
@@ -15,147 +17,361 @@
       --bubble: #f4f5fa;
       --line: #e6e7ed;
       --white: #fff;
-      --shadow: 0 8px 24px rgba(35, 20, 45, .08);
     }
+
     * { box-sizing: border-box; }
+
     body {
       margin: 0;
       background: #f7f7fa;
       color: var(--ink);
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: Inter, system-ui, -apple-system, sans-serif;
       line-height: 1.5;
     }
-    button { font: inherit; }
+
+    button, input { font: inherit; }
+
     .app {
       width: min(100%, 560px);
       min-height: 100vh;
-      margin: 0 auto;
+      margin: auto;
       display: flex;
       flex-direction: column;
       background: var(--white);
-      box-shadow: 0 0 32px rgba(30, 20, 40, .06);
+      box-shadow: 0 0 32px #1e14200f;
     }
+
     header {
       position: sticky;
       top: 0;
       z-index: 5;
       padding: 15px 18px 12px;
-      background: rgba(255,255,255,.96);
+      background: #fffffff5;
       border-bottom: 3px solid var(--pink);
       backdrop-filter: blur(10px);
     }
-    .brand-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-    .brand {
-      display: flex; align-items: center; gap: 9px;
-      color: var(--pink); font-size: 1.28rem; font-weight: 850; letter-spacing: -.04em;
+
+    .brand-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
     }
-    .brand-mark {
-      display: grid; place-items: center; width: 35px; height: 35px;
-      border-radius: 11px; background: var(--pink); color: white;
-      font-size: 1rem; letter-spacing: 0;
+
+    .brand-logo {
+      display: block;
+      width: 150px;
+      height: 45px;
+      object-fit: contain;
+      object-position: left center;
     }
+
     .demo-pill {
-      color: var(--pink-dark); background: var(--pink-soft);
-      border: 1px solid #ffd0e5; border-radius: 999px;
-      padding: 6px 10px; font-size: .72rem; font-weight: 800;
+      color: var(--pink-dark);
+      background: var(--pink-soft);
+      border: 1px solid #ffd0e5;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: .68rem;
+      font-weight: 800;
       white-space: nowrap;
     }
-    .breadcrumb { margin-top: 10px; color: var(--muted); font-size: .78rem; }
-    .notice {
-      margin: 14px 14px 0; padding: 10px 12px;
-      border: 1px solid #ffd0e5; background: var(--pink-soft);
-      border-radius: 12px; color: #7d1748; font-size: .78rem;
+
+    .breadcrumb {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: .78rem;
     }
-    .notice strong { color: var(--pink-dark); }
-    main { flex: 1; padding: 16px 14px 22px; }
-    #chat { display: flex; flex-direction: column; gap: 10px; }
+
+    .notice {
+      margin: 14px 14px 0;
+      padding: 10px 12px;
+      border: 1px solid #ffd0e5;
+      background: var(--pink-soft);
+      border-radius: 12px;
+      color: #7d1748;
+      font-size: .78rem;
+    }
+
+    main {
+      flex: 1;
+      padding: 16px 14px 22px;
+    }
+
+    #chat {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
     .message {
-      max-width: 88%; padding: 12px 14px; border-radius: 18px;
-      font-size: .96rem; overflow-wrap: anywhere;
+      max-width: 90%;
+      padding: 12px 14px;
+      border-radius: 18px;
+      font-size: .96rem;
+      overflow-wrap: anywhere;
       animation: appear .22s ease-out both;
     }
+
     .message.bot {
-      align-self: flex-start; background: var(--bubble);
+      align-self: flex-start;
+      background: var(--bubble);
       border-top-left-radius: 6px;
     }
+
     .message.user {
-      align-self: flex-end; color: white; background: var(--pink);
+      align-self: flex-end;
+      color: white;
+      background: var(--pink);
       border-bottom-right-radius: 6px;
     }
-    .message strong { font-weight: 750; }
-    .message small { display: block; opacity: .72; margin-top: 5px; font-size: .72rem; }
-    .message .info-card {
-      margin-top: 9px; padding: 12px; background: white;
-      border: 1px solid var(--line); border-radius: 12px;
+
+    .message small {
+      display: block;
+      opacity: .72;
+      margin-top: 5px;
+      font-size: .72rem;
     }
-    .info-card .card-title { font-weight: 800; color: var(--pink-dark); margin-bottom: 4px; }
-    .info-card p { margin: 4px 0; font-size: .88rem; }
-    .choices {
-      display: flex; flex-direction: column; gap: 9px;
-      margin: 2px 0 8px; align-items: stretch;
-      animation: appear .22s ease-out both;
+
+    .typing {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      min-width: 65px;
+      color: var(--muted);
+      font-size: .75rem;
     }
-    .choices-label { color: var(--muted); font-size: .78rem; padding: 0 3px; }
-    .choice {
-      text-align: left; padding: 12px 14px; border: 1px solid #f1b5d2;
-      border-radius: 14px; background: white; color: var(--ink);
-      cursor: pointer; transition: transform .15s, background .15s, border-color .15s;
-      display: flex; align-items: center; justify-content: space-between; gap: 10px;
+
+    .typing span {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #9a9eaa;
+      animation: bounce .9s infinite ease-in-out;
     }
-    .choice::after { content: "›"; color: var(--pink); font-size: 1.35rem; line-height: 1; }
-    .choice:hover { border-color: var(--pink); background: var(--pink-soft); }
-    .choice:active { transform: scale(.99); }
-    .choice:focus-visible, .restart:focus-visible { outline: 3px solid #f7a5cd; outline-offset: 2px; }
-    .typing { display: flex; align-items: center; gap: 5px; min-width: 58px; }
-    .typing span { width: 6px; height: 6px; border-radius: 50%; background: #9a9eaa; animation: bounce .9s infinite ease-in-out; }
+
     .typing span:nth-child(2) { animation-delay: .12s; }
     .typing span:nth-child(3) { animation-delay: .24s; }
+
+    .info-card {
+      width: 100%;
+      margin-top: 9px;
+      padding: 12px;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+    }
+
+    .card-title {
+      font-weight: 800;
+      color: var(--pink-dark);
+      margin-bottom: 6px;
+    }
+
+    .demo-placeholder {
+      min-height: 135px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 16px;
+      text-align: center;
+      color: var(--muted);
+      background: #fafafa;
+      border: 1px dashed #d9a1bd;
+      border-radius: 12px;
+      font-size: .85rem;
+    }
+
+    .demo-placeholder strong {
+      color: var(--pink-dark);
+    }
+
+    .choices {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      margin: 12px 0 8px;
+      animation: appear .22s ease-out both;
+    }
+
+    .choices-label {
+      color: var(--muted);
+      font-size: .78rem;
+      padding: 0 3px;
+    }
+
+    .choice {
+      width: 100%;
+      text-align: left;
+      padding: 12px 14px;
+      border: 1px solid #f1b5d2;
+      border-radius: 14px;
+      background: white;
+      color: var(--ink);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      transition: transform .15s, background .15s, border-color .15s;
+    }
+
+    .choice::after {
+      content: "›";
+      color: var(--pink);
+      font-size: 1.35rem;
+      line-height: 1;
+    }
+
+    .choice:hover {
+      border-color: var(--pink);
+      background: var(--pink-soft);
+    }
+
+    .choice:active { transform: scale(.99); }
+
+    .field-label {
+      display: block;
+      margin: 6px 0;
+      font-size: .83rem;
+      font-weight: 700;
+    }
+
+    .demo-input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #e2b3ca;
+      border-radius: 12px;
+      outline: none;
+      background: white;
+      color: var(--ink);
+    }
+
+    .demo-input:focus {
+      border-color: var(--pink);
+      box-shadow: 0 0 0 3px #ec00751a;
+    }
+
+    .submit-button {
+      width: 100%;
+      margin-top: 9px;
+      padding: 12px;
+      border: 0;
+      border-radius: 12px;
+      background: var(--pink);
+      color: white;
+      font-weight: 750;
+      cursor: pointer;
+    }
+
+    .submit-button:hover { background: var(--pink-dark); }
+
     .footer {
-      padding: 13px 16px 17px; border-top: 1px solid var(--line);
-      color: var(--muted); text-align: center; font-size: .74rem; background: #fff;
+      padding: 13px 16px 17px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      text-align: center;
+      font-size: .74rem;
+      background: white;
     }
+
     .restart {
-      margin-top: 8px; border: 0; background: transparent; color: var(--pink-dark);
-      font-weight: 750; cursor: pointer; padding: 5px 8px;
+      margin-top: 8px;
+      border: 0;
+      background: transparent;
+      color: var(--pink-dark);
+      font-weight: 750;
+      cursor: pointer;
+      padding: 5px 8px;
     }
-    @keyframes appear { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes bounce { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-5px); } }
+
+    button:focus-visible,
+    input:focus-visible {
+      outline: 3px solid #f7a5cd;
+      outline-offset: 2px;
+    }
+
+    @keyframes appear {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes bounce {
+      0%, 60%, 100% { transform: translateY(0); }
+      30% { transform: translateY(-5px); }
+    }
+
     @media (min-width: 600px) {
       body { padding: 22px 0; }
-      .app { min-height: calc(100vh - 44px); border: 1px solid var(--line); border-radius: 20px; overflow: hidden; }
+
+      .app {
+        min-height: calc(100vh - 44px);
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        overflow: hidden;
+      }
+
       header { position: relative; }
     }
+
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+      }
     }
   </style>
 </head>
+
 <body>
   <div class="app">
     <header>
       <div class="brand-row">
-        
-<div class="brand">
-  <img
-    src="logo002.png"
-    class="brand-logo"
-  >
-</div>
+        <div class="brand">
+          <img
+            src="logo002.png"
+            alt="Logo"
+            class="brand-logo"
+          >
+        </div>
 
         <span class="demo-pill">SIMULAÇÃO EDUCATIVA</span>
       </div>
-      <div class="breadcrumb">Início&nbsp; › &nbsp;Demonstração de atendimento</div>
+
+      <div class="breadcrumb">
+        Início&nbsp; › &nbsp;Demonstração de atendimento
+      </div>
     </header>
 
+    <div class="notice">
+      <strong>Ambiente demonstrativo:</strong>
+      todas as informações e os resultados apresentados são ilustrativos.
+      Nenhum cadastro, saldo, pagamento ou benefício é consultado ou confirmado.
+      Não informe dados pessoais ou financeiros reais.
+    </div>
+
     <main>
-      <section id="chat" aria-live="polite" aria-label="Conversa demonstrativa"></section>
-      <section id="options" class="choices" aria-label="Escolha uma resposta"></section>
+      <section
+        id="chat"
+        aria-live="polite"
+        aria-label="Conversa demonstrativa"
+      ></section>
+
+      <section
+        id="options"
+        class="choices"
+        aria-label="Escolha uma resposta"
+      ></section>
     </main>
 
     <footer class="footer">
       Protótipo para aprendizado de interfaces de conversa.
       <br>
-      <button class="restart" id="restart" type="button">↻ Reiniciar demonstração</button>
+      <button class="restart" id="restart" type="button">
+        ↻ Reiniciar demonstração
+      </button>
     </footer>
   </div>
 
@@ -164,109 +380,217 @@
     const options = document.querySelector("#options");
     const restartButton = document.querySelector("#restart");
 
-    // Cada etapa tem uma mensagem e opções pré-definidas. O visitante não digita texto livre.
+    // Os X representam os trechos da copy que ainda serão preenchidos.
+    // Os resultados e comprovantes são sempre identificados como fictícios.
+
     const flow = {
-      inicio: {
+      bloco1: {
         messages: [
-          "Olá! Seja bem-vindo(a) ao Guia Interativo.",
-          "Esta demonstração mostra como um atendimento por etapas pode funcionar. Você só precisa escolher uma das respostas disponíveis.",
-          "Qual tema educativo deseja explorar?"
+          "XXX, XXX XXXXX-BXXXX!",
+          "XXX XXXXXXXX XXX XXXXXXXX XXX XXXXXXXX XXXXXXXX XXXXXX XXXXXXXX.",
+          "XXXXXXXX XX XXXXXXXX X XXXXXXXX XXXXX."
         ],
         choices: [
-          { label: "Como consultar informações com segurança", next: "consulta" },
-          { label: "Como reconhecer possíveis golpes", next: "golpes" }
+          { label: "Continuar", next: "bloco2" }
         ]
       },
-      consulta: {
+
+      bloco2: {
         messages: [
-          "Vamos falar sobre consultas seguras.",
-          "Para informações sobre serviços públicos, digite o endereço oficial diretamente no navegador e confira o domínio antes de entrar.",
-          "Como você gostaria de continuar?"
+          "XXX XXX XXXX XXXXXXXX XXXXXXXX XX XXXXX APP XX XXXX?",
+          "Escolha uma das opções abaixo para continuar."
         ],
         choices: [
-          { label: "Ver uma lista de cuidados", next: "cuidados" },
-          { label: "Aprender a verificar um site", next: "site" }
+          { label: "XXX, XXX XXXXXXX", next: "bloco3" },
+          { label: "XXXXX XXXXX", next: "bloco3" },
+          { label: "XXX, XXX XXX XXXXXXX", next: "bloco3" }
         ]
       },
-      golpes: {
+
+      bloco3: {
         messages: [
-          "Ótima escolha. Mensagens que prometem dinheiro imediato ou exigem uma taxa para liberar valores merecem atenção.",
-          "Não clique em links inesperados nem forneça dados pessoais em páginas recebidas por mensagem.",
-          "O que você quer ver agora?"
+          "XXXX XXX XXXXXXX XXXXX?",
+          "Selecione uma resposta para esta demonstração."
         ],
         choices: [
-          { label: "Sinais de alerta comuns", next: "alertas" },
-          { label: "O que fazer diante de uma suspeita", next: "suspeita" }
+          { label: "XXXXXXX(X)", next: "bloco4" },
+          { label: "XXXXXXX(X)", next: "bloco4" },
+          { label: "XXXXX(X)", next: "bloco4" }
         ]
       },
-      cuidados: {
+
+      bloco4: {
         messages: [
-          "Confira estes cuidados básicos:"
+          "XXX XXX XXXXX XXXX XXXXX XXXX XX XXXXXXXX?"
+        ],
+        choices: [
+          { label: "XXX, XXX XXXXXXX", next: "bloco5" },
+          { label: "XXX, XXXXX XXX XXXXXXXX", next: "bloco5" }
+        ]
+      },
+
+      bloco5: {
+        messages: [
+          "XX XXXXXXX XXXXXXXX XXXXX XXXXXXXXX XX R$ XX,XX X R$ XX.XXX,XX."
+        ],
+        imagePlaceholder: "IMAGEM ILUSTRATIVA DA CONSULTA",
+        pauseAfter: 7000,
+        choices: [
+          { label: "XXXXXXXX XXXXX XXXXXX XXXXX", next: "bloco6" }
+        ]
+      },
+
+      bloco6: {
+        messages: [
+          "XXXXXXXX XXXXXXXX XXXXXXXX!"
         ],
         card: {
-          title: "Checklist de segurança",
+          title: "Resultado demonstrativo — FICTÍCIO",
           lines: [
-            "Acesse o portal oficial digitando o endereço por conta própria.",
-            "Nunca compartilhe senha, código de autenticação ou dados bancários em um chat.",
-            "Desconfie de urgência, promessas de pagamento garantido ou cobrança antecipada.",
-            "Em caso de dúvida, procure os canais oficiais de atendimento."
+            "Valor ilustrativo: R$ X.XXX,XX",
+            "Status: XXXXXXXXXX XXXXXXXX",
+            "Este resultado é apenas um exemplo visual. Nenhuma consulta real foi realizada."
           ]
         },
         choices: [
-          { label: "Voltar ao início", next: "inicio" },
-          { label: "Ver sinais de golpe", next: "golpes" }
+          { label: "Continuar demonstração", next: "bloco7" }
         ]
       },
-      site: {
+
+      bloco7: {
         messages: [
-          "Antes de inserir qualquer informação, confira cuidadosamente o endereço do site.",
-          "Um cadeado no navegador, sozinho, não garante que a página seja legítima. Pesquise o canal oficial por uma fonte confiável e confira se o endereço corresponde exatamente."
+          "X XXXXXXX XXXXX XXXXXXX XXXXXXXXX XX XXXX XXX.",
+          "XXXX XXXXX XXXXXXX XXXXXXXX?"
         ],
         choices: [
-          { label: "Ver checklist de segurança", next: "cuidados" },
-          { label: "Voltar ao início", next: "inicio" }
+          { label: "XXXXXXX XX XXXXXXXX", next: "bloco8" },
+          { label: "XXX XXXXXXXX", next: "bloco8" },
+          { label: "XXXXX", next: "bloco8" }
         ]
       },
-      alertas: {
+
+      bloco8: {
         messages: [
-          "Fique atento(a) a estes sinais:"
+          "XXXXXX XXX XXXXX XXXXXXXX:",
+          "Para esta etapa de demonstração, utilize somente um valor fictício."
+        ],
+        input: {
+          label: "Campo de exemplo",
+          placeholder: "Digite um texto fictício",
+          button: "Enviar exemplo"
+        },
+        next: "bloco9"
+      },
+
+      bloco9: {
+        messages: [
+          "XXXXXX: XXXXXXX XX XXXXXX XXX XXXXX XXXXXXXX.",
+          "XXXXX XXXXXXXX: XXXXX XXXXX XXXXXXXX."
+        ],
+        pauseAfter: 3000,
+        choices: [
+          { label: "XXX, XXXX XXXXXXX", next: "bloco10" },
+          { label: "Voltar à etapa anterior", next: "bloco8" }
+        ]
+      },
+
+      bloco10: {
+        messages: [
+          "XXXXXXX XXXXXX XXXXXXXX XXXXXXXX XXXXXXXXX XXXXXX XXXXX..."
+        ],
+        pauseAfter: 4000,
+        choices: [
+          { label: "Continuar demonstração", next: "bloco11" }
+        ]
+      },
+
+      bloco11: {
+        messages: [
+          "XXXXXXXX XXXXXXXX XXX XXXXXXXX!",
+          "XXXXX: XXXXXXXXX@XXXXXXXXXXXXXXX.XXX",
+          "XXXXXX: XXXXXXXXXXXXX XXXXXXXX"
         ],
         card: {
-          title: "Possíveis sinais de golpe",
+          title: "Cadastro fictício",
           lines: [
-            "Promessa de valor alto ou aprovação garantida sem explicação verificável.",
-            "Pedido de PIX, taxa ou depósito para liberar um suposto benefício.",
-            "Solicitação de CPF, nome da mãe, senha ou código por um link recebido.",
-            "Uso de logotipos oficiais em páginas cujo endereço não é oficial."
+            "Os dados exibidos são placeholders de demonstração.",
+            "Nenhum cadastro foi criado ou validado."
           ]
         },
         choices: [
-          { label: "O que fazer se suspeitar", next: "suspeita" },
-          { label: "Voltar ao início", next: "inicio" }
+          { label: "Continuar", next: "bloco12" }
         ]
       },
-      suspeita: {
+
+      bloco12: {
         messages: [
-          "Interrompa a conversa e não faça pagamentos nem compartilhe informações.",
-          "Se você já informou dados ou fez um pagamento, entre em contato com seu banco pelos canais oficiais e procure orientação nos órgãos competentes. Guarde comprovantes e mensagens."
+          "XXXXX XX XXXXXXX XXXXXXX XXXX XXXXXXXX XXXXXXXXXXX."
         ],
+        pauseAfter: 3000,
         choices: [
-          { label: "Ver sinais de alerta", next: "alertas" },
-          { label: "Finalizar demonstração", next: "fim" }
+          { label: "XXXXXXX XXXXXXXXX XXXX XXXXX", next: "bloco13" }
         ]
       },
-      fim: {
+
+      bloco13: {
         messages: [
-          "Demonstração concluída!",
-          "Este protótipo não consulta cadastros, não verifica identidade e não libera ou confirma valores. Ele serve apenas para demonstrar um fluxo de chat com respostas selecionáveis."
+          "Exemplo visual de comprovante fictício."
         ],
+        imagePlaceholder: "COMPROVANTE FICTÍCIO — NÃO É UM DOCUMENTO REAL",
         choices: [
-          { label: "Recomeçar", next: "inicio" }
+          { label: "Continuar demonstração", next: "bloco14" }
+        ]
+      },
+
+      bloco14: {
+        messages: [
+          "XXXX XXX XXX XXX XXX XXXXX XXXXX?",
+          "Demonstração educativa: não realize pagamentos para liberar supostos benefícios.",
+          "Desconfie de cobranças antecipadas e confira informações nos canais oficiais."
+        ],
+        pauseAfter: 3000,
+        choices: [
+          { label: "Continuar para a finalização", next: "bloco15" }
+        ]
+      },
+
+      bloco15: {
+        messages: [
+          "XXX XXXXXXXXXXX XXX XXXXXXXX!",
+          "Esta demonstração foi concluída. Os dados e resultados são fictícios."
+        ],
+        pauseAfter: 2000,
+        choices: [
+          { label: "Recomeçar demonstração", next: "bloco1" }
         ]
       }
     };
 
     let stepToken = 0;
+    let activeTimers = [];
+
+    function schedule(callback, delay, token) {
+      const timer = setTimeout(() => {
+        if (token === stepToken) callback();
+      }, delay);
+
+      activeTimers.push(timer);
+      return timer;
+    }
+
+    function clearTimers() {
+      activeTimers.forEach(clearTimeout);
+      activeTimers = [];
+    }
+
+    function scrollToLatest() {
+      requestAnimationFrame(() => {
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: "smooth"
+        });
+      });
+    }
 
     function addMessage(text, who = "bot") {
       const message = document.createElement("div");
@@ -274,13 +598,52 @@
       message.textContent = text;
       chat.appendChild(message);
       scrollToLatest();
+      return message;
+    }
+
+    function showTyping() {
+      const message = document.createElement("div");
+      message.className = "message bot";
+      message.setAttribute("aria-label", "Digitando");
+
+      const typing = document.createElement("div");
+      typing.className = "typing";
+
+      const label = document.createElement("span");
+      label.textContent = "";
+      label.setAttribute("aria-hidden", "true");
+
+      const text = document.createElement("span");
+      text.textContent = "";
+      text.setAttribute("aria-hidden", "true");
+
+      const third = document.createElement("span");
+      third.textContent = "";
+      third.setAttribute("aria-hidden", "true");
+
+      typing.append(label, text, third);
+
+      const caption = document.createElement("span");
+      caption.textContent = "Digitando…";
+      caption.style.marginLeft = "5px";
+      caption.style.fontSize = ".75rem";
+      caption.style.color = "var(--muted)";
+
+      typing.appendChild(caption);
+      message.appendChild(typing);
+      chat.appendChild(message);
+      scrollToLatest();
+
+      return message;
     }
 
     function addCard(card) {
       const message = document.createElement("div");
       message.className = "message bot";
+
       const wrapper = document.createElement("div");
       wrapper.className = "info-card";
+
       const title = document.createElement("div");
       title.className = "card-title";
       title.textContent = card.title;
@@ -289,47 +652,46 @@
       const list = document.createElement("ul");
       list.style.paddingLeft = "19px";
       list.style.margin = "7px 0 0";
+
       card.lines.forEach(line => {
         const item = document.createElement("li");
         item.style.marginTop = "6px";
         item.textContent = line;
         list.appendChild(item);
       });
+
       wrapper.appendChild(list);
       message.appendChild(wrapper);
       chat.appendChild(message);
       scrollToLatest();
     }
 
-    function showTyping() {
-      const typing = document.createElement("div");
-      typing.className = "message bot";
-      typing.setAttribute("aria-label", "Preparando próxima mensagem");
-      typing.innerHTML = '<div class="typing" aria-hidden="true"><span></span><span></span><span></span></div>';
-      chat.appendChild(typing);
+    function addImagePlaceholder(label) {
+      const message = document.createElement("div");
+      message.className = "message bot";
+
+      const placeholder = document.createElement("div");
+      placeholder.className = "demo-placeholder";
+
+      const title = document.createElement("strong");
+      title.textContent = "Imagem demonstrativa";
+
+      const description = document.createElement("span");
+      description.textContent = label;
+
+      const note = document.createElement("small");
+      note.textContent = "Espaço reservado para uma imagem ilustrativa.";
+
+      placeholder.append(title, description, note);
+      message.appendChild(placeholder);
+      chat.appendChild(message);
       scrollToLatest();
-      return typing;
     }
 
-    function renderStep(key) {
-      const token = ++stepToken;
-      const step = flow[key];
+    function renderChoices(step, token) {
       options.replaceChildren();
-      options.hidden = true;
 
-      let delay = 180;
-      step.messages.forEach(message => {
-        setTimeout(() => {
-          if (token === stepToken) addMessage(message);
-        }, delay);
-        delay += 520;
-      });
-
-      setTimeout(() => {
-        if (token !== stepToken) return;
-        if (step.card) addCard(step.card);
-        options.replaceChildren();
-
+      if (step.choices) {
         const label = document.createElement("div");
         label.className = "choices-label";
         label.textContent = "Selecione uma opção para continuar:";
@@ -340,54 +702,181 @@
           button.type = "button";
           button.className = "choice";
           button.textContent = choice.label;
-          button.addEventListener("click", () => choose(choice));
+
+          button.addEventListener("click", () => {
+            if (token !== stepToken) return;
+            choose(choice);
+          });
+
           options.appendChild(button);
         });
-        options.hidden = false;
-        scrollToLatest();
-      }, delay + (step.card ? 120 : 0));
+      }
+
+      if (step.input) {
+        const form = document.createElement("form");
+        const label = document.createElement("label");
+        label.className = "field-label";
+        label.textContent = step.input.label;
+
+        const input = document.createElement("input");
+        input.className = "demo-input";
+        input.type = "text";
+        input.placeholder = step.input.placeholder;
+        input.autocomplete = "off";
+        input.maxLength = 80;
+        input.required = true;
+
+        const note = document.createElement("small");
+        note.textContent = "Não insira uma chave Pix, senha ou dado pessoal real.";
+        note.style.display = "block";
+        note.style.marginTop = "7px";
+        note.style.color = "var(--muted)";
+
+        const button = document.createElement("button");
+        button.type = "submit";
+        button.className = "submit-button";
+        button.textContent = step.input.button;
+
+        form.append(label, input, note, button);
+
+        form.addEventListener("submit", event => {
+          event.preventDefault();
+          if (token !== stepToken) return;
+
+          const value = input.value.trim();
+          if (!value) {
+            input.focus();
+            return;
+          }
+
+          // Não exibe nem armazena o conteúdo digitado.
+          input.value = "";
+          addMessage("Texto fictício enviado para a demonstração.", "user");
+          options.replaceChildren();
+          options.hidden = true;
+
+          const typing = showTyping();
+          const currentToken = ++stepToken;
+
+          schedule(() => {
+            typing.remove();
+            renderStep(step.next);
+          }, 650, currentToken);
+        });
+
+        options.appendChild(form);
+      }
+
+      options.hidden = false;
+      scrollToLatest();
+    }
+
+    function renderStep(key) {
+      clearTimers();
+
+      const token = ++stepToken;
+      const step = flow[key];
+
+      if (!step) return;
+
+      options.replaceChildren();
+      options.hidden = true;
+
+      let messageIndex = 0;
+
+      function showNextMessage() {
+        if (token !== stepToken) return;
+
+        if (messageIndex >= step.messages.length) {
+          finishStep();
+          return;
+        }
+
+        const typing = showTyping();
+
+        schedule(() => {
+          typing.remove();
+          addMessage(step.messages[messageIndex]);
+          messageIndex++;
+
+          schedule(showNextMessage, 450, token);
+        }, 650, token);
+      }
+
+      function finishStep() {
+        if (token !== stepToken) return;
+
+        const delay = step.pauseAfter ?? 650;
+
+        // Mantém a animação de digitação durante a pausa final da etapa.
+        if (delay > 650) {
+          const typing = showTyping();
+
+          schedule(() => {
+            typing.remove();
+            showStepExtras();
+          }, delay, token);
+        } else {
+          showStepExtras();
+        }
+      }
+
+      function showStepExtras() {
+        if (token !== stepToken) return;
+
+        if (step.card) addCard(step.card);
+
+        if (step.imagePlaceholder) {
+          addImagePlaceholder(step.imagePlaceholder);
+        }
+
+        renderChoices(step, token);
+      }
+
+      showNextMessage();
     }
 
     function choose(choice) {
-      // Desabilita opções imediatamente para impedir cliques duplicados.
-      [...options.querySelectorAll("button")].forEach(button => button.disabled = true);
+      clearTimers();
+
+      [...options.querySelectorAll("button")].forEach(button => {
+        button.disabled = true;
+      });
+
       addMessage(choice.label, "user");
       options.replaceChildren();
       options.hidden = true;
+
+      const token = ++stepToken;
       const typing = showTyping();
-      const currentToken = ++stepToken;
-      setTimeout(() => {
-        if (currentToken !== stepToken) return;
+
+      schedule(() => {
         typing.remove();
         renderStep(choice.next);
-      }, 550);
-    }
-
-    function scrollToLatest() {
-      requestAnimationFrame(() => {
-        window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
-      });
+      }, 650, token);
     }
 
     function start() {
+      clearTimers();
       stepToken++;
       chat.replaceChildren();
       options.replaceChildren();
       options.hidden = true;
-      renderStep("inicio");
+      renderStep("bloco1");
     }
 
     restartButton.addEventListener("click", start);
+
+    // Personalização opcional do nome, caso a etapa anterior o tenha salvo.
+    const nomeLead = localStorage.getItem("nomeLead");
+
+    if (nomeLead) {
+      document.querySelectorAll(".nomeLead").forEach(elemento => {
+        elemento.textContent = nomeLead;
+      });
+    }
+
     start();
   </script>
-  <script>
-  const nomeLead = localStorage.getItem("nomeLead");
-
-  if (nomeLead) {
-    document.querySelectorAll(".nomeLead").forEach(elemento => {
-      elemento.textContent = nomeLead;
-    });
-  }
-</script>
 </body>
 </html>
