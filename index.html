@@ -375,509 +375,418 @@
     </footer>
   </div>
 
-  <script>
-    const chat = document.querySelector("#chat");
-    const options = document.querySelector("#options");
-    const restartButton = document.querySelector("#restart");
+  
+<script>
+const chat = document.querySelector("#chat");
+const options = document.querySelector("#options");
+const restartButton = document.querySelector("#restart");
 
-    // Os X representam os trechos da copy que ainda serão preenchidos.
-    // Os resultados e comprovantes são sempre identificados como fictícios.
+const flow = {
+  bloco1: {
+    messages: [
+      "Olá! Seja bem-vindo(a) à demonstração educativa.",
+      "Nesta experiência, você conhecerá um exemplo ilustrativo de atendimento digital.",
+      "Os valores e resultados apresentados são fictícios. Nenhuma consulta ou aprovação real será realizada."
+    ],
+    choices: [
+      { label: "Começar demonstração", next: "bloco2" }
+    ]
+  },
 
-    const flow = {
-      bloco1: {
-        messages: [
-          "Olá, Seja Bem-vindo!",
-          "Nos próximos passos vou te auxiliar a resgatar seus valores a receber.",
-          "Nos últimos dias, milhares de brasileiros conseguiram sacar esses valores esquecidos em contas bancarias."
-          "Responda às perguntas a seguir para aprovação."
-        ],
-        choices: [
-          { label: "Continuar", next: "bloco2" }
-        ]
-      },
+  bloco2: {
+    messages: [
+      "ETAPA 1 — Conhecendo o atendimento",
+      "Em um serviço real, é importante verificar a identidade da instituição antes de compartilhar informações."
+    ],
+    choices: [
+      { label: "Quero entender como funciona", next: "bloco3" },
+      { label: "Quero conhecer os sinais de alerta", next: "bloco4" }
+    ]
+  },
 
-      bloco2: {
-        messages: [
-          "XXX XXX XXXX XXXXXXXX XXXXXXXX XX XXXXX APP XX XXXX?",
-          "Escolha uma das opções abaixo para continuar."
-        ],
-        choices: [
-          { label: "XXX, XXX XXXXXXX", next: "bloco3" },
-          { label: "XXXXX XXXXX", next: "bloco3" },
-          { label: "XXX, XXX XXX XXXXXXX", next: "bloco3" }
-        ]
-      },
+  bloco3: {
+    messages: [
+      "ETAPA 2 — Exemplo de interação",
+      "Imagine uma página que explica como consultar informações por meio dos canais oficiais.",
+      "Esta demonstração não acessa sistemas públicos nem verifica se você tem valores a receber."
+    ],
+    choices: [
+      { label: "Continuar", next: "bloco5" },
+      { label: "Ver dicas de segurança", next: "bloco4" }
+    ]
+  },
 
-      bloco3: {
-        messages: [
-          "XXXX XXX XXXXXXX XXXXX?",
-          "Selecione uma resposta para esta demonstração."
-        ],
-        choices: [
-          { label: "XXXXXXX(X)", next: "bloco4" },
-          { label: "XXXXXXX(X)", next: "bloco4" },
-          { label: "XXXXX(X)", next: "bloco4" }
-        ]
-      },
+  bloco4: {
+    messages: [
+      "SINAIS DE ALERTA",
+      "Desconfie de promessas de dinheiro garantido, mensagens que pressionam você a agir rapidamente ou solicitações de senhas e códigos.",
+      "Não pague Pix, taxas ou supostos impostos antecipados para liberar valores prometidos por mensagens."
+    ],
+    choices: [
+      { label: "Entendi, continuar", next: "bloco5" }
+    ]
+  },
 
-      bloco4: {
-        messages: [
-          "XXX XXX XXXXX XXXX XXXXX XXXX XX XXXXXXXX?"
-        ],
-        choices: [
-          { label: "XXX, XXX XXXXXXX", next: "bloco5" },
-          { label: "XXX, XXXXX XXX XXXXXXXX", next: "bloco5" }
-        ]
-      },
+  bloco5: {
+    messages: [
+      "ETAPA 3 — Exemplo visual",
+      "O espaço abaixo é reservado para uma ilustração educativa, não para um comprovante ou uma tela oficial."
+    ],
+    imagePlaceholder: "ILUSTRAÇÃO DE DEMONSTRAÇÃO — SEM VALIDADE OFICIAL",
+    choices: [
+      { label: "Ver resultado de exemplo", next: "bloco6" }
+    ]
+  },
 
-      bloco5: {
-        messages: [
-          "XX XXXXXXX XXXXXXXX XXXXX XXXXXXXXX XX R$ XX,XX X R$ XX.XXX,XX."
-        ],
-        imagePlaceholder: "IMAGEM ILUSTRATIVA DA CONSULTA",
-        pauseAfter: 7000,
-        choices: [
-          { label: "XXXXXXXX XXXXX XXXXXX XXXXX", next: "bloco6" }
-        ]
-      },
+  bloco6: {
+    messages: [
+      "ETAPA 4 — Resultado ilustrativo",
+      "Veja como uma interface pode organizar informações fictícias. Este resultado não corresponde a uma consulta real."
+    ],
+    card: {
+      title: "EXEMPLO FICTÍCIO",
+      lines: [
+        "Status: demonstração concluída",
+        "Valor: não calculado",
+        "Elegibilidade: não verificada",
+        "Protocolo: EXEMPLO-0000",
+        "Este cartão não é um documento oficial."
+      ]
+    },
+    choices: [
+      { label: "Continuar", next: "bloco7" }
+    ]
+  },
 
-      bloco6: {
-        messages: [
-          "XXXXXXXX XXXXXXXX XXXXXXXX!"
-        ],
-        card: {
-          title: "Resultado demonstrativo — FICTÍCIO",
-          lines: [
-            "Valor ilustrativo: R$ X.XXX,XX",
-            "Status: XXXXXXXXXX XXXXXXXX",
-            "Este resultado é apenas um exemplo visual. Nenhuma consulta real foi realizada."
-          ]
-        },
-        choices: [
-          { label: "Continuar demonstração", next: "bloco7" }
-        ]
-      },
+  bloco7: {
+    messages: [
+      "ETAPA 5 — Personalização da interface",
+      "Se desejar, digite um nome fictício para visualizar uma interação personalizada. O campo é opcional."
+    ],
+    input: {
+      label: "Nome fictício (opcional)",
+      placeholder: "Ex.: Maria",
+      button: "Continuar",
+      next: "bloco8"
+    },
+    choices: [
+      { label: "Pular esta etapa", next: "bloco8" }
+    ]
+  },
 
-      bloco7: {
-        messages: [
-          "X XXXXXXX XXXXX XXXXXXX XXXXXXXXX XX XXXX XXX.",
-          "XXXX XXXXX XXXXXXX XXXXXXXX?"
-        ],
-        choices: [
-          { label: "XXXXXXX XX XXXXXXXX", next: "bloco8" },
-          { label: "XXX XXXXXXXX", next: "bloco8" },
-          { label: "XXXXX", next: "bloco8" }
-        ]
-      },
+  bloco8: {
+    messages: [
+      "Pronto! Você avançou na demonstração.",
+      "O texto inserido no campo anterior não é enviado a nenhum órgão ou serviço por este código.",
+      "Lembre-se de nunca informar senhas, códigos de autenticação, dados bancários ou chaves Pix em páginas desconhecidas."
+    ],
+    choices: [
+      { label: "Ver orientação final", next: "bloco9" }
+    ]
+  },
 
-      bloco8: {
-        messages: [
-          "XXXXXX XXX XXXXX XXXXXXXX:",
-          "Para esta etapa de demonstração, utilize somente um valor fictício."
-        ],
-        input: {
-          label: "Campo de exemplo",
-          placeholder: "Digite um texto fictício",
-          button: "Enviar exemplo"
-        },
-        next: "bloco9"
-      },
+  bloco9: {
+    messages: [
+      "ORIENTAÇÃO DE SEGURANÇA",
+      "Para conferir informações sobre benefícios ou valores, procure o site ou aplicativo oficial da instituição responsável.",
+      "Não confie apenas em links recebidos por mensagens e não pague valores antecipados para liberar supostos benefícios."
+    ],
+    choices: [
+      { label: "Concluir demonstração", next: "bloco10" }
+    ]
+  },
 
-      bloco9: {
-        messages: [
-          "XXXXXX: XXXXXXX XX XXXXXX XXX XXXXX XXXXXXXX.",
-          "XXXXX XXXXXXXX: XXXXX XXXXX XXXXXXXX."
-        ],
-        pauseAfter: 3000,
-        choices: [
-          { label: "XXX, XXXX XXXXXXX", next: "bloco10" },
-          { label: "Voltar à etapa anterior", next: "bloco8" }
-        ]
-      },
+  bloco10: {
+    messages: [
+      "Demonstração concluída! Obrigado por participar.",
+      "Esta página é ilustrativa. Nenhum benefício, indenização, saldo ou pagamento foi consultado, aprovado ou liberado."
+    ],
+    choices: [
+      { label: "Recomeçar", next: "bloco1" }
+    ]
+  }
+};
 
-      bloco10: {
-        messages: [
-          "XXXXXXX XXXXXX XXXXXXXX XXXXXXXX XXXXXXXXX XXXXXX XXXXX..."
-        ],
-        pauseAfter: 4000,
-        choices: [
-          { label: "Continuar demonstração", next: "bloco11" }
-        ]
-      },
+let stepToken = 0;
+let activeTimers = [];
 
-      bloco11: {
-        messages: [
-          "XXXXXXXX XXXXXXXX XXX XXXXXXXX!",
-          "XXXXX: XXXXXXXXX@XXXXXXXXXXXXXXX.XXX",
-          "XXXXXX: XXXXXXXXXXXXX XXXXXXXX"
-        ],
-        card: {
-          title: "Cadastro fictício",
-          lines: [
-            "Os dados exibidos são placeholders de demonstração.",
-            "Nenhum cadastro foi criado ou validado."
-          ]
-        },
-        choices: [
-          { label: "Continuar", next: "bloco12" }
-        ]
-      },
+function clearTimers() {
+  activeTimers.forEach(timer => clearTimeout(timer));
+  activeTimers = [];
+}
 
-      bloco12: {
-        messages: [
-          "XXXXX XX XXXXXXX XXXXXXX XXXX XXXXXXXX XXXXXXXXXXX."
-        ],
-        pauseAfter: 3000,
-        choices: [
-          { label: "XXXXXXX XXXXXXXXX XXXX XXXXX", next: "bloco13" }
-        ]
-      },
+function schedule(callback, delay, token) {
+  const timer = setTimeout(() => {
+    if (token === stepToken) callback();
+  }, delay);
 
-      bloco13: {
-        messages: [
-          "Exemplo visual de comprovante fictício."
-        ],
-        imagePlaceholder: "COMPROVANTE FICTÍCIO — NÃO É UM DOCUMENTO REAL",
-        choices: [
-          { label: "Continuar demonstração", next: "bloco14" }
-        ]
-      },
+  activeTimers.push(timer);
+}
 
-      bloco14: {
-        messages: [
-          "XXXX XXX XXX XXX XXX XXXXX XXXXX?",
-          "Demonstração educativa: não realize pagamentos para liberar supostos benefícios.",
-          "Desconfie de cobranças antecipadas e confira informações nos canais oficiais."
-        ],
-        pauseAfter: 3000,
-        choices: [
-          { label: "Continuar para a finalização", next: "bloco15" }
-        ]
-      },
+function scrollToLatest() {
+  requestAnimationFrame(() => {
+    chat.scrollTop = chat.scrollHeight;
+  });
+}
 
-      bloco15: {
-        messages: [
-          "XXX XXXXXXXXXXX XXX XXXXXXXX!",
-          "Esta demonstração foi concluída. Os dados e resultados são fictícios."
-        ],
-        pauseAfter: 2000,
-        choices: [
-          { label: "Recomeçar demonstração", next: "bloco1" }
-        ]
-      }
-    };
+function addMessage(text, who = "bot") {
+  const message = document.createElement("div");
+  message.className = `message ${who}`;
+  message.textContent = text;
+  chat.appendChild(message);
+  scrollToLatest();
+  return message;
+}
 
-    let stepToken = 0;
-    let activeTimers = [];
+function showTyping() {
+  const message = document.createElement("div");
+  message.className = "message bot";
 
-    function schedule(callback, delay, token) {
-      const timer = setTimeout(() => {
-        if (token === stepToken) callback();
-      }, delay);
+  const typing = document.createElement("div");
+  typing.className = "typing";
+  typing.setAttribute("aria-label", "Digitando");
 
-      activeTimers.push(timer);
-      return timer;
-    }
+  for (let i = 0; i < 3; i++) {
+    const dot = document.createElement("span");
+    dot.setAttribute("aria-hidden", "true");
+    typing.appendChild(dot);
+  }
 
-    function clearTimers() {
-      activeTimers.forEach(clearTimeout);
-      activeTimers = [];
-    }
+  const caption = document.createElement("span");
+  caption.textContent = "Digitando…";
+  caption.style.marginLeft = "5px";
 
-    function scrollToLatest() {
-      requestAnimationFrame(() => {
-        window.scrollTo({
-          top: document.body.scrollHeight,
-          behavior: "smooth"
-        });
-      });
-    }
+  typing.appendChild(caption);
+  message.appendChild(typing);
+  chat.appendChild(message);
+  scrollToLatest();
 
-    function addMessage(text, who = "bot") {
-      const message = document.createElement("div");
-      message.className = `message ${who}`;
-      message.textContent = text;
-      chat.appendChild(message);
-      scrollToLatest();
-      return message;
-    }
+  return message;
+}
 
-    function showTyping() {
-      const message = document.createElement("div");
-      message.className = "message bot";
-      message.setAttribute("aria-label", "Digitando");
+function addCard(card) {
+  const message = document.createElement("div");
+  message.className = "message bot";
 
-      const typing = document.createElement("div");
-      typing.className = "typing";
+  const wrapper = document.createElement("div");
+  wrapper.className = "info-card";
 
-      const label = document.createElement("span");
-      label.textContent = "";
-      label.setAttribute("aria-hidden", "true");
+  const title = document.createElement("div");
+  title.className = "card-title";
+  title.textContent = card.title;
+  wrapper.appendChild(title);
 
-      const text = document.createElement("span");
-      text.textContent = "";
-      text.setAttribute("aria-hidden", "true");
+  const list = document.createElement("ul");
+  list.style.paddingLeft = "19px";
+  list.style.margin = "7px 0 0";
 
-      const third = document.createElement("span");
-      third.textContent = "";
-      third.setAttribute("aria-hidden", "true");
+  card.lines.forEach(line => {
+    const item = document.createElement("li");
+    item.style.marginTop = "6px";
+    item.textContent = line;
+    list.appendChild(item);
+  });
 
-      typing.append(label, text, third);
+  wrapper.appendChild(list);
+  message.appendChild(wrapper);
+  chat.appendChild(message);
+  scrollToLatest();
+}
 
-      const caption = document.createElement("span");
-      caption.textContent = "Digitando…";
-      caption.style.marginLeft = "5px";
-      caption.style.fontSize = ".75rem";
-      caption.style.color = "var(--muted)";
+function addImagePlaceholder(label) {
+  const message = document.createElement("div");
+  message.className = "message bot";
 
-      typing.appendChild(caption);
-      message.appendChild(typing);
-      chat.appendChild(message);
-      scrollToLatest();
+  const placeholder = document.createElement("div");
+  placeholder.className = "demo-placeholder";
 
-      return message;
-    }
+  const title = document.createElement("strong");
+  title.textContent = "Imagem demonstrativa";
 
-    function addCard(card) {
-      const message = document.createElement("div");
-      message.className = "message bot";
+  const description = document.createElement("span");
+  description.textContent = label;
 
-      const wrapper = document.createElement("div");
-      wrapper.className = "info-card";
+  const note = document.createElement("small");
+  note.textContent = "Espaço reservado para uma imagem ilustrativa.";
 
-      const title = document.createElement("div");
-      title.className = "card-title";
-      title.textContent = card.title;
-      wrapper.appendChild(title);
+  placeholder.append(title, description, note);
+  message.appendChild(placeholder);
+  chat.appendChild(message);
+  scrollToLatest();
+}
 
-      const list = document.createElement("ul");
-      list.style.paddingLeft = "19px";
-      list.style.margin = "7px 0 0";
+function renderChoices(step, token) {
+  options.replaceChildren();
+  options.hidden = false;
 
-      card.lines.forEach(line => {
-        const item = document.createElement("li");
-        item.style.marginTop = "6px";
-        item.textContent = line;
-        list.appendChild(item);
+  if (step.choices?.length) {
+    const label = document.createElement("div");
+    label.className = "choices-label";
+    label.textContent = "Selecione uma opção para continuar:";
+    options.appendChild(label);
+
+    step.choices.forEach(choice => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "choice";
+      button.textContent = choice.label;
+
+      button.addEventListener("click", () => {
+        if (token !== stepToken) return;
+        choose(choice);
       });
 
-      wrapper.appendChild(list);
-      message.appendChild(wrapper);
-      chat.appendChild(message);
-      scrollToLatest();
-    }
+      options.appendChild(button);
+    });
+  }
 
-    function addImagePlaceholder(label) {
-      const message = document.createElement("div");
-      message.className = "message bot";
+  if (step.input) {
+    const form = document.createElement("form");
 
-      const placeholder = document.createElement("div");
-      placeholder.className = "demo-placeholder";
+    const label = document.createElement("label");
+    label.className = "field-label";
+    label.textContent = step.input.label;
 
-      const title = document.createElement("strong");
-      title.textContent = "Imagem demonstrativa";
+    const input = document.createElement("input");
+    input.className = "demo-input";
+    input.type = "text";
+    input.placeholder = step.input.placeholder;
+    input.autocomplete = "off";
+    input.maxLength = 60;
 
-      const description = document.createElement("span");
-      description.textContent = label;
+    const note = document.createElement("small");
+    note.textContent = "Use somente um nome fictício. Não informe dados pessoais ou financeiros.";
+    note.style.display = "block";
+    note.style.marginTop = "7px";
+    note.style.color = "var(--muted)";
 
-      const note = document.createElement("small");
-      note.textContent = "Espaço reservado para uma imagem ilustrativa.";
+    const button = document.createElement("button");
+    button.type = "submit";
+    button.className = "submit-button";
+    button.textContent = step.input.button;
 
-      placeholder.append(title, description, note);
-      message.appendChild(placeholder);
-      chat.appendChild(message);
-      scrollToLatest();
-    }
+    form.append(label, input, note, button);
 
-    function renderChoices(step, token) {
-      options.replaceChildren();
+    form.addEventListener("submit", event => {
+      event.preventDefault();
+      if (token !== stepToken) return;
 
-      if (step.choices) {
-        const label = document.createElement("div");
-        label.className = "choices-label";
-        label.textContent = "Selecione uma opção para continuar:";
-        options.appendChild(label);
+      const value = input.value.trim();
 
-        step.choices.forEach(choice => {
-          const button = document.createElement("button");
-          button.type = "button";
-          button.className = "choice";
-          button.textContent = choice.label;
+      addMessage(
+        value
+          ? `Nome de exemplo informado: ${value}`
+          : "Continuar sem informar um nome",
+        "user"
+      );
 
-          button.addEventListener("click", () => {
-            if (token !== stepToken) return;
-            choose(choice);
-          });
-
-          options.appendChild(button);
-        });
-      }
-
-      if (step.input) {
-        const form = document.createElement("form");
-        const label = document.createElement("label");
-        label.className = "field-label";
-        label.textContent = step.input.label;
-
-        const input = document.createElement("input");
-        input.className = "demo-input";
-        input.type = "text";
-        input.placeholder = step.input.placeholder;
-        input.autocomplete = "off";
-        input.maxLength = 80;
-        input.required = true;
-
-        const note = document.createElement("small");
-        note.textContent = "Não insira uma chave Pix, senha ou dado pessoal real.";
-        note.style.display = "block";
-        note.style.marginTop = "7px";
-        note.style.color = "var(--muted)";
-
-        const button = document.createElement("button");
-        button.type = "submit";
-        button.className = "submit-button";
-        button.textContent = step.input.button;
-
-        form.append(label, input, note, button);
-
-        form.addEventListener("submit", event => {
-          event.preventDefault();
-          if (token !== stepToken) return;
-
-          const value = input.value.trim();
-          if (!value) {
-            input.focus();
-            return;
-          }
-
-          // Não exibe nem armazena o conteúdo digitado.
-          input.value = "";
-          addMessage("Texto fictício enviado para a demonstração.", "user");
-          options.replaceChildren();
-          options.hidden = true;
-
-          const typing = showTyping();
-          const currentToken = ++stepToken;
-
-          schedule(() => {
-            typing.remove();
-            renderStep(step.next);
-          }, 650, currentToken);
-        });
-
-        options.appendChild(form);
-      }
-
-      options.hidden = false;
-      scrollToLatest();
-    }
-
-    function renderStep(key) {
-      clearTimers();
-
-      const token = ++stepToken;
-      const step = flow[key];
-
-      if (!step) return;
-
+      // O nome é usado apenas na mensagem desta sessão.
+      // Não é armazenado nem enviado a um servidor.
       options.replaceChildren();
       options.hidden = true;
 
-      let messageIndex = 0;
-
-      function showNextMessage() {
-        if (token !== stepToken) return;
-
-        if (messageIndex >= step.messages.length) {
-          finishStep();
-          return;
-        }
-
-        const typing = showTyping();
-
-        schedule(() => {
-          typing.remove();
-          addMessage(step.messages[messageIndex]);
-          messageIndex++;
-
-          schedule(showNextMessage, 450, token);
-        }, 650, token);
-      }
-
-      function finishStep() {
-        if (token !== stepToken) return;
-
-        const delay = step.pauseAfter ?? 650;
-
-        // Mantém a animação de digitação durante a pausa final da etapa.
-        if (delay > 650) {
-          const typing = showTyping();
-
-          schedule(() => {
-            typing.remove();
-            showStepExtras();
-          }, delay, token);
-        } else {
-          showStepExtras();
-        }
-      }
-
-      function showStepExtras() {
-        if (token !== stepToken) return;
-
-        if (step.card) addCard(step.card);
-
-        if (step.imagePlaceholder) {
-          addImagePlaceholder(step.imagePlaceholder);
-        }
-
-        renderChoices(step, token);
-      }
-
-      showNextMessage();
-    }
-
-    function choose(choice) {
-      clearTimers();
-
-      [...options.querySelectorAll("button")].forEach(button => {
-        button.disabled = true;
-      });
-
-      addMessage(choice.label, "user");
-      options.replaceChildren();
-      options.hidden = true;
-
-      const token = ++stepToken;
+      const currentToken = ++stepToken;
       const typing = showTyping();
 
       schedule(() => {
         typing.remove();
-        renderStep(choice.next);
-      }, 650, token);
+        renderStep(step.input.next);
+      }, 650, currentToken);
+    });
+
+    options.appendChild(form);
+  }
+
+  scrollToLatest();
+}
+
+function renderStep(key) {
+  clearTimers();
+
+  const token = ++stepToken;
+  const step = flow[key];
+
+  if (!step) return;
+
+  options.replaceChildren();
+  options.hidden = true;
+
+  let index = 0;
+
+  function showNextMessage() {
+    if (token !== stepToken) return;
+
+    if (index >= step.messages.length) {
+      showStepExtras();
+      return;
     }
 
-    function start() {
-      clearTimers();
-      stepToken++;
-      chat.replaceChildren();
-      options.replaceChildren();
-      options.hidden = true;
-      renderStep("bloco1");
+    const typing = showTyping();
+    const delay = Math.min(1600, 550 + step.messages[index].length * 9);
+
+    schedule(() => {
+      typing.remove();
+      addMessage(step.messages[index]);
+      index++;
+      schedule(showNextMessage, 400, token);
+    }, delay, token);
+  }
+
+  function showStepExtras() {
+    if (token !== stepToken) return;
+
+    if (step.pauseAfter) {
+      const typing = showTyping();
+
+      schedule(() => {
+        typing.remove();
+        renderExtras();
+      }, step.pauseAfter, token);
+    } else {
+      renderExtras();
     }
+  }
 
-    restartButton.addEventListener("click", start);
+  function renderExtras() {
+    if (token !== stepToken) return;
 
-    // Personalização opcional do nome, caso a etapa anterior o tenha salvo.
-    const nomeLead = localStorage.getItem("nomeLead");
+    if (step.card) addCard(step.card);
+    if (step.imagePlaceholder) addImagePlaceholder(step.imagePlaceholder);
 
-    if (nomeLead) {
-      document.querySelectorAll(".nomeLead").forEach(elemento => {
-        elemento.textContent = nomeLead;
-      });
-    }
+    renderChoices(step, token);
+  }
 
-    start();
-  </script>
+  showNextMessage();
+}
+
+function choose(choice) {
+  clearTimers();
+
+  addMessage(choice.label, "user");
+  options.replaceChildren();
+  options.hidden = true;
+
+  const token = ++stepToken;
+  const typing = showTyping();
+
+  schedule(() => {
+    typing.remove();
+    renderStep(choice.next);
+  }, 650, token);
+}
+
+function start() {
+  clearTimers();
+  stepToken++;
+  chat.replaceChildren();
+  options.replaceChildren();
+  options.hidden = true;
+  renderStep("bloco1");
+}
+
+restartButton.addEventListener("click", start);
+
+start();
+</script>
 </body>
 </html>
