@@ -395,55 +395,55 @@ const flow = {
 
   bloco2: {
     messages: [
-      "Você já teve consultas recentes em nosso APP ou Site ?"
+      "Você já teve consultas recentes em nosso APP ou Site Serasa Experian ?"
     ],
     choices: [
-      { label: "Quero entender como funciona", next: "bloco3" },
-      { label: "Quero conhecer os sinais de alerta", next: "bloco4" }
+      { label: "Sim, já acessei", next: "bloco3" },
+      { label: "Não, não tenho acesso", next: "bloco3" }
     ]
   },
 
   bloco3: {
     messages: [
-      "ETAPA 2 — Exemplo de interação",
-      "Imagine uma página que explica como consultar informações por meio dos canais oficiais.",
-      "Esta demonstração não acessa sistemas públicos nem verifica se você tem valores a receber."
+      "Qual seu estado civil ?",
     ],
     choices: [
-      { label: "Continuar", next: "bloco5" },
-      { label: "Ver dicas de segurança", next: "bloco4" }
+      { label: "Casado(a)", next: "bloco4" },
+      { label: "Solteiro(a)", next: "bloco4" }
+      { label: "Viúvo(a)", next: "bloco4" }
     ]
   },
 
   bloco4: {
     messages: [
-      "SINAIS DE ALERTA",
-      "Desconfie de promessas de dinheiro garantido, mensagens que pressionam você a agir rapidamente ou solicitações de senhas e códigos.",
-      "Não pague Pix, taxas ou supostos impostos antecipados para liberar valores prometidos por mensagens."
+      "Você já ouviu falar sobre os valores disponíveis ?",
     ],
     choices: [
-      { label: "Entendi, continuar", next: "bloco5" }
+      { label: "Sim, já conheço", next: "bloco5" }
+      { label: "Não, seria uma novidade", next: "bloco5" }
     ]
   },
 
   bloco5: {
     messages: [
-      "ETAPA 3 — Exemplo visual",
-      "O espaço abaixo é reservado para uma ilustração educativa, não para um comprovante ou uma tela oficial."
+      "Nossos valores liberados podem variar entre R$ 10,00 ou R$ 25.000,00 dentro deste programa! ",
+      "Milhares de Brasileiros conseguiram e agora você pode se encaixar!"
     ],
     imagePlaceholder: "ILUSTRAÇÃO DE DEMONSTRAÇÃO — SEM VALIDADE OFICIAL",
     choices: [
-      { label: "Ver resultado de exemplo", next: "bloco6" }
+      { label: "Verificar meus valores agora mesmo", next: "bloco6" }
     ]
   },
 
   bloco6: {
     messages: [
-      "ETAPA 4 — Resultado ilustrativo",
-      "Veja como uma interface pode organizar informações fictícias. Este resultado não corresponde a uma consulta real."
+      "Autenticidade confirmada!",
+      "Saldo Disponível Para Receber: R$ 4.960,50 
+      "Status: Pré-aprovado"  
+"Obs: Solicite este saque agora mesmo! Caso ao contrario o Governo Do Brasil arrecada saques pendentes para fundos."
     ],
     card: {
-      title: "EXEMPLO FICTÍCIO",
+      title: "Acabamos de salvar e verificar suas informações com sucesso! Iremos iniciar a etapa da sua Indenização e chave Pix.",
       lines: [
         "Status: demonstração concluída",
         "Valor: não calculado",
@@ -458,7 +458,7 @@ const flow = {
   },
 
   bloco7: {
-    messages: [
+    messages: [o
       "ETAPA 5 — Personalização da interface",
       "Se desejar, digite um nome fictício para visualizar uma interação personalizada. O campo é opcional."
     ],
