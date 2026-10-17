@@ -139,7 +139,7 @@
       </div>
       <div class="breadcrumb">Início&nbsp; › &nbsp;Demonstração de atendimento</div>
     </header>
-
+<span class="nomeLead">Visitante</span>
     <div class="notice">
       <strong>Ambiente demonstrativo:</strong> página independente, sem vínculo com gov.br ou órgão público.
       Não informe CPF, senhas, chave PIX ou outros dados pessoais.
@@ -378,5 +378,14 @@
     restartButton.addEventListener("click", start);
     start();
   </script>
+  <script>
+  const nomeLead = localStorage.getItem("nomeLead");
+
+  if (nomeLead) {
+    document.querySelectorAll(".nomeLead").forEach(elemento => {
+      elemento.textContent = nomeLead;
+    });
+  }
+</script>
 </body>
 </html>
