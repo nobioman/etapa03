@@ -509,7 +509,15 @@ const flow = {
     choices: [{ label: "Concluir pagamento e receber minha indenização", next: "bloco15" }],
     pauseAfter: 3000
   },
-  
+  bloco15: {
+    messages: [
+      "XXX XXXXXXXXXXX XXX XXXXXXXX!",
+      "XXXXXXX XX XXXX: XXXXXXXX XXXXXXXX"
+    ],
+    choices: [{ label: "XXXXXXXX", next: "bloco1" }],
+    pauseAfter: 2000
+  }
+};
 
 
 let stepToken = 0;
