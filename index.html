@@ -868,6 +868,12 @@ function renderExtras() {
 }
 
 function choose(choice) {
+  // Abre o link quando a opção for configurada para redirecionar.
+  if (choice.action === "redirect" && choice.url) {
+    window.location.href = choice.url;
+    return;
+  }
+
   clearTimers();
 
   addMessage(choice.label, "user");
