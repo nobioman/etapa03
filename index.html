@@ -634,15 +634,19 @@ function addCard(card) {
   card.lines.forEach(line => {
     const item = document.createElement("li");
     item.style.marginTop = "6px";
-    item.textContent =
-  typeof line === "function" ? line() : line;
-    list.appendChild(item);
-  });
+    const texto = typeof line === "function" ? line() : line;
 
-  wrapper.appendChild(list);
-  message.appendChild(wrapper);
-  chat.appendChild(message);
-  scrollToLatest();
+if (texto === "Status: APROVADO") {
+  item.textContent = "Status: ";
+
+  const aprovado = document.createElement("span");
+  aprovado.textContent = "APROVADO";
+  aprovado.style.color = "#2E9439";
+  aprovado.style.fontWeight = "bold";
+
+  item.appendChild(aprovado);
+} else {
+  item.textContent = texto;
 }
 
 
