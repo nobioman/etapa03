@@ -488,7 +488,7 @@ const flow = {
   bloco9: {
     messages: [
       "Nosso programa não se responsabiliza caso você informe a Chave PIX errada.",
-      "Certifique que chave inseriad está correta!",
+      "Certifique que chave inseriada está correta!",
     ],
     choices: [{ label: "Sim, está correto.", next: "bloco10" }],
     pauseAfter: 3000
@@ -551,6 +551,9 @@ imageAlt: "Comprovante fictício para fins educativos",
 
 let stepToken = 0;
 let activeTimers = [];
+
+// Guarda a chave digitada durante a sessão atual.
+let chavePixCadastrada = "";
 
 function clearTimers() {
   activeTimers.forEach(timer => clearTimeout(timer));
@@ -742,14 +745,19 @@ function renderChoices(step, token) {
       event.preventDefault();
       if (token !== stepToken) return;
 
-      const value = input.value.trim();
+      
+const value = input.value.trim();
 
-      addMessage(
-        value
-          ? `Nome de exemplo informado: ${value}`
-          : "Continuar sem informar um nome",
-        "user"
-      );
+// Guarda a chave digitada para reutilizá-la nos próximos blocos.
+chavePixCadastrada = value;
+
+addMessage(
+  value
+    ? `Chave Pix: ${chavePixCadastrada}`
+    : "Continuar sem informar uma chave",
+  "user"
+);
+
 
       // O nome é usado apenas na mensagem desta sessão.
       // Não é armazenado nem enviado a um servidor.
