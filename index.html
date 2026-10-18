@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#EC0075">
-  <title>Atendimento Interativo — Simulação Educativa</title>
+  <title>Atendimento Interativo — SCentral de Atendimento</title>
 
   <style>
     :root {
@@ -897,16 +897,48 @@ start();
   }
 </style>
 
+
+<style>
+  .bot-message-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .bot-avatar {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #EC0075;
+    background: #fff;
+    flex-shrink: 0;
+  }
+
+  .bot-message-row .message.bot {
+    max-width: calc(90% - 42px);
+    margin: 0;
+  }
+</style>
+
 <script>
 (() => {
   const AVATAR = "./images/perfil.png";
+  const chat = document.querySelector("#chat");
 
-  // Adiciona a mini logo às mensagens do bot
-  function addAvatarToMessage(message) {
-    if (!message || !message.classList.contains("bot")) return;
+  if (!chat) return;
 
-    // Evita adicionar a mesma logo duas vezes
-    if (message.parentElement?.classList.contains("bot-message-row")) return;
+  function addAvatar(message) {
+    if (!message.matches(".message.bot")) return;
+
+    if (message.parentElement?.classList.contains("bot-message-row")) {
+      return;
+    }
 
     const row = document.createElement("div");
     row.className = "bot-message-row";
@@ -914,30 +946,27 @@ start();
     const avatar = document.createElement("img");
     avatar.className = "bot-avatar";
     avatar.src = AVATAR;
-    avatar.alt = "Perfil do atendimento";
-    avatar.width = 32;
-    avatar.height = 32;
+    avatar.alt = "Perfil ilustrativo do atendimento";
+    avatar.width = 34;
+    avatar.height = 34;
 
+    // Não ocultar a imagem automaticamente em caso de erro.
     avatar.addEventListener("error", () => {
-      avatar.style.display = "none";
+      console.error("Não foi possível carregar a mini logo:", AVATAR);
     });
 
+    row.appendChild(avatar);
     message.parentNode.insertBefore(row, message);
-    row.append(avatar, message);
+    row.appendChild(message);
   }
 
-  // Observa mensagens novas adicionadas ao chat
-  const chat = document.querySelector("#chat");
-  if (!chat) return;
-
-  function processMessages() {
-    chat.querySelectorAll(".message.bot").forEach(addAvatarToMessage);
+  function scan() {
+    chat.querySelectorAll(".message.bot").forEach(addAvatar);
   }
 
-  processMessages();
+  scan();
 
-  const observer = new MutationObserver(processMessages);
-  observer.observe(chat, {
+  new MutationObserver(scan).observe(chat, {
     childList: true,
     subtree: true
   });
