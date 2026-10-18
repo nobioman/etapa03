@@ -984,56 +984,75 @@ start();
   }
 </style>
 
+
+<style>
+  .bot-session-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .bot-session-avatar {
+    display: block !important;
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+</style>
+
 <script>
 (() => {
   const chat = document.querySelector("#chat");
-  if (!chat) return;
+  if (!chat) {
+    console.error('Não encontrei o elemento #chat.');
+    return;
+  }
 
-  const logoPath = "./images/logoatendente.png";
+  const logoPath = "./images/perfil.png";
 
-  function aplicarLogoNaPrimeiraMensagem() {
-    // Cada etapa é identificada por uma sequência de mensagens
-    const mensagens = Array.from(
-      chat.querySelectorAll(".message.bot")
-    );
+  function adicionarLogo() {
+    const mensagens = chat.querySelectorAll(".message.bot");
 
-    mensagens.forEach((mensagem, index) => {
-      if (mensagem.dataset.logoProcessada === "sim") return;
-
-      mensagem.dataset.logoProcessada = "sim";
+    mensagens.forEach((mensagem) => {
+      if (mensagem.dataset.logoVerificada === "sim") return;
 
       // Ignora mensagens temporárias de digitação
       if (
         mensagem.classList.contains("typing") ||
         mensagem.classList.contains("typing-indicator") ||
         mensagem.querySelector(".typing, .typing-indicator")
-      ) {
-        return;
-      }
+      ) return;
 
-      // Não mostra logo em mensagens vazias
+      // Ignora mensagens vazias
       if (
         !mensagem.textContent.trim() &&
         !mensagem.querySelector("img, canvas, video")
-      ) {
-        return;
-      }
+      ) return;
 
-      // Só coloca a logo se esta for a primeira mensagem
-      // do bot que ainda não estiver dentro de uma linha com logo.
-      const mensagemAnterior = mensagens
-        .slice(0, index)
-        .some((anterior) => anterior.isConnected);
+      mensagem.dataset.logoVerificada = "sim";
 
-      if (mensagemAnterior) return;
+      // Evita adicionar a logo mais de uma vez ao mesmo bloco
+      if (mensagem.closest(".bot-session-row")) return;
+
+      // Mostra a logo apenas na primeira mensagem do bot
+      // que ainda não pertence a uma linha com logo.
+      if (chat.querySelector(".bot-session-row")) return;
 
       const linha = document.createElement("div");
       linha.className = "bot-session-row";
 
       const logo = document.createElement("img");
       logo.className = "bot-session-avatar";
-      logo.src = logoPath; "./images/logoatendente.png";
+      logo.src = logoPath;
       logo.alt = "Logo do atendimento";
+
+      logo.onerror = () => {
+        console.error("Imagem não encontrada:", logoPath);
+      };
 
       mensagem.parentNode.insertBefore(linha, mensagem);
       linha.appendChild(logo);
@@ -1041,18 +1060,16 @@ start();
     });
   }
 
-  aplicarLogoNaPrimeiraMensagem();
+  adicionarLogo();
 
-  const observador = new MutationObserver(() => {
-    aplicarLogoNaPrimeiraMensagem();
-  });
-
-  observador.observe(chat, {
+  const observer = new MutationObserver(adicionarLogo);
+  observer.observe(chat, {
     childList: true,
     subtree: true
   });
 })();
 </script>
+
 
 
 </body>
