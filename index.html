@@ -779,10 +779,9 @@ function renderStep(key) {
     if (token !== stepToken) return;
 
     if (step.card) addCard(step.card);
-    if (step.imagePlaceholder) addImagePlaceholder(step.imagePlaceholder);
-
-    renderChoices(step, token);
-  }
+   if (step.imageSrc) {
+  addImagePlaceholder(step.imageSrc, step.imageAlt);
+}
 
   showNextMessage();
 }
