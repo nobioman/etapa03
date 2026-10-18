@@ -793,14 +793,21 @@ function renderStep(key) {
     }
   }
 
-  function renderExtras() {
-    if (token !== stepToken) return;
+  
+function renderExtras() {
+  if (token !== stepToken) return;
 
-    if (step.card) addCard(step.card);
-    if (step.imagePlaceholder) addImagePlaceholder(step.imagePlaceholder);
-
-    renderChoices(step, token);
+  if (step.card) {
+    addCard(step.card);
   }
+
+  if (step.imageSrc) {
+    addImagePlaceholder(step.imageSrc, step.imageAlt);
+  }
+
+  renderChoices(step, token);
+}
+
 
   showNextMessage();
 }
