@@ -518,7 +518,9 @@ messages: [
     pauseAfter: 3000
   },
   bloco13: {
-    messages: ["Gerando seu comprovante oficial de recebimento..."],
+    messages: ["Gerando seu comprovante oficial de recebimento..."
+      "✅ Comprovante Gerado"
+    ],
     imageSrc: "./images/comprovante.png",
 imageAlt: "Comprovante fictício para fins educativos",
     
@@ -527,7 +529,7 @@ card: {
   lines: [
     "Valor ilustrativo: R$ 4.960,50",
     () => `Chave Pix informada: ${chavePixCadastrada || "Não informada"}`,
-    "Status: SIMULAÇÃO EDUCATIVA"
+    <span style="color: #299133;">"Status: APROVADO"</span>
   ]
 },
 
