@@ -422,7 +422,7 @@ const flow = {
   },
   bloco6: {
     messages: [
-      "Estamos verificano valores...",
+      "Estamos verificando valores...",
       "Só um momento...",
       "Pronto!"
     ],
@@ -434,25 +434,25 @@ const flow = {
         "Status: Pré-aprovado,"
       ]
     },
-    choices: [{ label: "XXXXXXXX", next: "bloco7" }]
+    choices: [{ label: "Continuar", next: "bloco7" }]
   },
   bloco7: {
     messages: [
-      "X XXXXXXX XXXXX XXXXXXX XXXXXXXXX XX XXXX XXX.",
-      "XXXX XXXXX XXXXXXX XXXXXXXX?"
+      "Acabamos de salvar e verificar suas informações com sucesso! Iremos iniciar a etapa da sua Indenização e chave Pix.",
+      "Qual chave deseja cadastrar:"
     ],
     choices: [
-      { label: "XXXXXXX XX XXXXXXXX", next: "bloco8" },
-      { label: "XXX XXXXXXXX", next: "bloco8" },
-      { label: "XXXXX", next: "bloco8" }
+      { label: "Número de Telefone", next: "bloco8" },
+      { label: "CPF", next: "bloco8" },
+      { label: "E-mail", next: "bloco8" }
     ]
   },
   bloco8: {
-    messages: ["XXXXXX XXX XXXXX XXXXXXXX:"],
+    messages: ["ATENÇÃO: Verifique se a chave PIX informada está correta:"],
     input: {
-      label: "XXXXXX XXXXXXXX (use somente texto fictício)",
-      placeholder: "XXXXXXXX@XXXXXXXXXXXXXXX.XXX",
-      button: "XXXXXXXX",
+      label: "Digite aqui",
+      placeholder: "xxxxxxx",
+      button: "Cadastrar",
       next: "bloco9"
     },
     choices: [{ label: "XXXXXXXX XXXXX XXXX", next: "bloco9" }]
