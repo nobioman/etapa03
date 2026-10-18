@@ -113,6 +113,32 @@
       animation: appear .22s ease-out both;
     }
 
+
+/* Linha que agrupa a mini foto e a mensagem */
+.bot-message-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  max-width: 100%;
+}
+
+/* Mini logo de perfil do bot */
+.bot-avatar {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #EC0075;
+  background: #fff;
+  flex-shrink: 0;
+}
+
+/* A mensagem ocupa o espaço restante */
+.bot-message-row .message.bot {
+  max-width: calc(100% - 40px);
+}
+
     .message.bot {
       align-self: flex-start;
       background: var(--bubble);
