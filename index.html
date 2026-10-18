@@ -521,14 +521,16 @@ messages: [
     messages: ["Gerando seu comprovante oficial de recebimento..."],
     imageSrc: "./images/comprovante.png",
 imageAlt: "Comprovante fictício para fins educativos",
-    card: {
-      title: "Valores Esquecidos",
-      lines: [
-        "Valor disponível para saque: R$ 4.960,50",
-        "Chave Pix: ",
-        "Imposto de Saque BANCO do Brasil: R$ 39,99"
-      ]
-    },
+    
+card: {
+  title: "Resumo demonstrativo",
+  lines: [
+    "Valor ilustrativo: R$ 4.960,50",
+    () => `Chave Pix informada: ${chavePixCadastrada || "Não informada"}`,
+    "Status: SIMULAÇÃO EDUCATIVA"
+  ]
+},
+
     choices: [{ label: "Porque tenho que pagar este imposto ?", next: "bloco14" }]
   },
   bloco14: {
@@ -630,7 +632,8 @@ function addCard(card) {
   card.lines.forEach(line => {
     const item = document.createElement("li");
     item.style.marginTop = "6px";
-    item.textContent = line;
+    item.textContent =
+  typeof line === "function" ? line() : line;
     list.appendChild(item);
   });
 
@@ -807,7 +810,11 @@ function renderStep(key) {
 
     schedule(() => {
       typing.remove();
-      addMessage(step.messages[index]);
+      const mensagem = step.messages[index];
+
+addMessage(
+  typeof mensagem === "function" ? mensagem() : mensagem
+);
       index++;
       schedule(showNextMessage, 400, token);
     }, delay, token);
