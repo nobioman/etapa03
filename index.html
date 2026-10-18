@@ -607,27 +607,41 @@ function addCard(card) {
   scrollToLatest();
 }
 
-function addImagePlaceholder(label) {
+
+function addImagePlaceholder(src, alt) {
   const message = document.createElement("div");
   message.className = "message bot";
 
-  const placeholder = document.createElement("div");
-  placeholder.className = "demo-placeholder";
+  const wrapper = document.createElement("div");
+  wrapper.className = "info-card";
 
-  const title = document.createElement("strong");
-  title.textContent = "Imagem demonstrativa";
+  const image = document.createElement("img");
+  image.src = src;
+  image.alt = alt || "Imagem ilustrativa";
+  image.loading = "lazy";
 
-  const description = document.createElement("span");
-  description.textContent = label;
+  image.style.display = "block";
+  image.style.width = "100%";
+  image.style.maxWidth = "100%";
+  image.style.height = "auto";
+  image.style.borderRadius = "12px";
+  image.style.objectFit = "contain";
 
-  const note = document.createElement("small");
-  note.textContent = "Espaço reservado para uma imagem ilustrativa.";
+  image.onerror = () => {
+    const error = document.createElement("p");
+    error.textContent =
+      "Não foi possível carregar a imagem. Verifique o caminho do arquivo.";
+    error.style.color = "var(--pink-dark)";
+    wrapper.appendChild(error);
+  };
 
-  placeholder.append(title, description, note);
-  message.appendChild(placeholder);
+  wrapper.appendChild(image);
+  message.appendChild(wrapper);
   chat.appendChild(message);
+
   scrollToLatest();
 }
+
 
 function renderChoices(step, token) {
   options.replaceChildren();
