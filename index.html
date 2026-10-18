@@ -926,54 +926,107 @@ start();
   }
 </style>
 
+
+<style>
+  .bot-message-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    width: 100%;
+    margin: 0;
+  }
+
+  .bot-avatar {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    object-fit: cover;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .bot-message-row .message.bot {
+    margin: 0;
+    min-width: 0;
+  }
+
+  /* Esconde a logo de blocos temporários de digitação */
+  .bot-message-row .typing,
+  .bot-message-row .typing-indicator {
+    /* Não aplica estilos adicionais */
+  }
+
+  .bot-message-row:has(.message:empty) {
+    display: none;
+  }
+</style>
+
 <script>
 (() => {
-  const AVATAR = "./images/perfil.png";
   const chat = document.querySelector("#chat");
-
   if (!chat) return;
 
-  function addAvatar(message) {
-    if (!message.matches(".message.bot")) return;
+  const avatarPath = "./images/perfil.png";
 
-    if (message.parentElement?.classList.contains("bot-message-row")) {
-      return;
-    }
+  function adicionarLogos() {
+    chat.querySelectorAll(".message.bot").forEach((mensagem) => {
+      // Não adiciona logo duas vezes
+      if (mensagem.closest(".bot-message-row")) return;
 
-    const row = document.createElement("div");
-    row.className = "bot-message-row";
+      // Não adiciona logo em mensagens temporárias de digitação
+      if (
+        mensagem.classList.contains("typing") ||
+        mensagem.classList.contains("typing-indicator") ||
+        mensagem.querySelector(".typing, .typing-indicator")
+      ) return;
 
-    const avatar = document.createElement("img");
-    avatar.className = "bot-avatar";
-    avatar.src = AVATAR;
-    avatar.alt = "Perfil ilustrativo do atendimento";
-    avatar.width = 34;
-    avatar.height = 34;
+      // Ignora mensagens vazias
+      if (!mensagem.textContent.trim() && !mensagem.querySelector("img, canvas, video")) {
+        return;
+      }
 
-    // Não ocultar a imagem automaticamente em caso de erro.
-    avatar.addEventListener("error", () => {
-      console.error("Não foi possível carregar a mini logo:", AVATAR);
+      const linha = document.createElement("div");
+      linha.className = "bot-message-row";
+
+      const logo = document.createElement("img");
+      logo.className = "bot-avatar";
+      logo.src = avatarPath;
+      logo.alt = "Logo do atendimento";
+
+      // Se a imagem falhar, informa no console sem deixar uma linha vazia
+      logo.onerror = () => {
+        console.error("Não foi possível carregar a logo:", avatarPath);
+        linha.remove();
+      };
+
+      mensagem.parentNode.insertBefore(linha, mensagem);
+      linha.appendChild(logo);
+      linha.appendChild(mensagem);
     });
-
-    row.appendChild(avatar);
-    message.parentNode.insertBefore(row, message);
-    row.appendChild(message);
   }
 
-  function scan() {
-    chat.querySelectorAll(".message.bot").forEach(addAvatar);
-  }
+  adicionarLogos();
 
-  scan();
+  const observador = new MutationObserver(() => {
+    adicionarLogos();
 
-  new MutationObserver(scan).observe(chat, {
+    // Remove linhas que ficaram sem mensagem após a remoção de um bloco
+    chat.querySelectorAll(".bot-message-row").forEach((linha) => {
+      const mensagem = linha.querySelector(".message.bot");
+
+      if (!mensagem || !mensagem.isConnected) {
+        linha.remove();
+      }
+    });
+  });
+
+  observador.observe(chat, {
     childList: true,
     subtree: true
   });
 })();
 </script>
-</body>
-</html>
+
 
 </body>
 </html>
