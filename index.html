@@ -1095,5 +1095,476 @@ start();
 
 
 
+<!-- BOTÃO DE PAGAMENTO + GUIA PIX DEMONSTRATIVO -->
+<style>
+  #pix-demo {
+    --pix-primary: #EC0075;
+    --pix-light: #fff0f7;
+    --pix-border: #ffd0e5;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #252535;
+    width: 100%;
+    max-width: 540px;
+    margin: 16px auto;
+    box-sizing: border-box;
+  }
+
+  #pix-demo * {
+    box-sizing: border-box;
+  }
+
+  #pix-demo .pix-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+    padding: 16px;
+    border: 1px solid #ffadd2;
+    border-radius: 16px;
+    background: #fff;
+    color: var(--pix-primary);
+    font-size: 15px;
+    font-weight: 700;
+    text-align: left;
+    cursor: pointer;
+    transition: background .2s, transform .2s;
+  }
+
+  #pix-demo .pix-trigger:hover {
+    background: var(--pix-light);
+  }
+
+  #pix-demo .pix-trigger:focus-visible,
+  #pix-demo button:focus-visible {
+    outline: 3px solid #f7a4cd;
+    outline-offset: 3px;
+  }
+
+  #pix-demo .pix-arrow {
+    font-size: 23px;
+  }
+
+  #pix-demo .pix-guide {
+    margin-top: 14px;
+    overflow: hidden;
+    border: 1px solid #eeeaf0;
+    border-radius: 17px;
+    background: #fff;
+    box-shadow: 0 5px 22px rgba(30, 15, 35, .07);
+  }
+
+  #pix-demo .pix-header {
+    padding: 20px 18px 16px;
+    text-align: center;
+    background: linear-gradient(180deg, #fff0f7, #fff);
+    border-bottom: 1px solid #f4e8ef;
+  }
+
+  #pix-demo .pix-logo {
+    display: inline-block;
+    padding: 5px 11px;
+    border-radius: 20px;
+    background: #fff;
+    color: var(--pix-primary);
+    border: 1px solid var(--pix-border);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .7px;
+    margin-bottom: 12px;
+  }
+
+  #pix-demo .pix-header h3 {
+    margin: 0 0 7px;
+    color: var(--pix-primary);
+    font-size: 21px;
+  }
+
+  #pix-demo .pix-header p {
+    margin: 0;
+    color: #777181;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  #pix-demo .pix-content {
+    padding: 17px;
+  }
+
+  #pix-demo .pix-demo-alert {
+    padding: 12px;
+    margin-bottom: 16px;
+    border: 1px solid #f0d99a;
+    border-radius: 11px;
+    background: #fff8df;
+    color: #77571a;
+    font-size: 12px;
+    line-height: 1.6;
+  }
+
+  #pix-demo .pix-demo-alert strong {
+    display: block;
+    margin-bottom: 3px;
+  }
+
+  #pix-demo .pix-amount {
+    padding: 17px 12px;
+    margin-bottom: 17px;
+    border: 1px solid var(--pix-primary);
+    border-radius: 11px;
+    background: #fff5fa;
+    text-align: center;
+  }
+
+  #pix-demo .pix-caption {
+    display: block;
+    margin-bottom: 5px;
+    color: #696273;
+    font-size: 12px;
+  }
+
+  #pix-demo .pix-value {
+    display: block;
+    color: var(--pix-primary);
+    font-size: 31px;
+    font-weight: 800;
+    letter-spacing: -.7px;
+  }
+
+  #pix-demo .pix-demo-label {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 4px 8px;
+    border-radius: 5px;
+    background: #ffe0ef;
+    color: #a80054;
+    font-size: 10px;
+    font-weight: 700;
+  }
+
+  #pix-demo .pix-qr-wrap {
+    text-align: center;
+    margin: 18px 0;
+  }
+
+  #pix-demo .pix-qr {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 174px;
+    height: 174px;
+    margin: auto;
+    padding: 9px;
+    border: 2px solid var(--pix-primary);
+    border-radius: 12px;
+    background: white;
+  }
+
+  #pix-demo .pix-qr img {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+
+  #pix-demo .pix-qr-placeholder {
+    color: #8d7180;
+    font-size: 12px;
+    line-height: 1.6;
+  }
+
+  #pix-demo .pix-steps {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+  }
+
+  #pix-demo .pix-steps li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid #f0edf1;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  #pix-demo .pix-step-number {
+    display: inline-flex;
+    flex: 0 0 23px;
+    width: 23px;
+    height: 23px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--pix-primary);
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  #pix-demo .pix-code-label {
+    display: block;
+    margin-bottom: 8px;
+    color: #9d3970;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .8px;
+  }
+
+  #pix-demo .pix-code-box {
+    padding: 13px;
+    border: 1px solid var(--pix-border);
+    border-radius: 10px;
+    background: #fff7fb;
+  }
+
+  #pix-demo .pix-code {
+    display: block;
+    width: 100%;
+    min-height: 64px;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    resize: vertical;
+    background: transparent;
+    color: #554957;
+    font: 11px/1.7 monospace;
+    overflow-wrap: anywhere;
+  }
+
+  #pix-demo .pix-copy {
+    display: block;
+    width: 100%;
+    padding: 15px 12px;
+    margin-top: 12px;
+    border: 0;
+    border-radius: 10px;
+    background: var(--pix-primary);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 5px 13px rgba(236, 0, 117, .18);
+  }
+
+  #pix-demo .pix-copy:hover {
+    background: #ce0066;
+  }
+
+  #pix-demo .pix-status {
+    margin-top: 14px;
+    padding: 11px;
+    border-radius: 9px;
+    background: #f8f5f8;
+    color: #6e6370;
+    font-size: 12px;
+    line-height: 1.6;
+    text-align: center;
+  }
+
+  #pix-demo .pix-status[data-state="success"] {
+    background: #eaf8ee;
+    color: #176c32;
+  }
+
+  #pix-demo .pix-footer {
+    padding: 13px;
+    border-top: 1px solid #f0edf1;
+    color: #8b8290;
+    font-size: 10px;
+    line-height: 1.7;
+    text-align: center;
+  }
+
+  #pix-demo [hidden] {
+    display: none !important;
+  }
+
+  @media (max-width: 380px) {
+    #pix-demo .pix-content {
+      padding: 12px;
+    }
+
+    #pix-demo .pix-value {
+      font-size: 27px;
+    }
+  }
+</style>
+
+<div id="pix-demo">
+  <!-- Este botão pode ser colocado na resposta do chatbot -->
+  <button
+    type="button"
+    class="pix-trigger"
+    id="pix-open"
+    aria-expanded="false"
+    aria-controls="pix-guide"
+  >
+    <span>Concluir pagamento e continuar</span>
+    <span class="pix-arrow" aria-hidden="true">›</span>
+  </button>
+
+  <!-- Guia exibido após o clique -->
+  <section
+    class="pix-guide"
+    id="pix-guide"
+    aria-label="Guia de pagamento Pix demonstrativo"
+    hidden
+  >
+    <header class="pix-header">
+      <span class="pix-logo">PAGAMENTO VIA PIX</span>
+      <h3>Guia de pagamento</h3>
+      <p>Exemplo visual para integração com seu gateway</p>
+    </header>
+
+    <div class="pix-content">
+      <div class="pix-demo-alert">
+        <strong>⚠️ Ambiente demonstrativo</strong>
+        Os dados abaixo são ilustrativos. Nenhuma cobrança real
+        será criada por este exemplo.
+      </div>
+
+      <div class="pix-amount">
+        <span class="pix-caption">Valor de demonstração</span>
+        <strong class="pix-value" id="pix-value">R$ 39,99</strong>
+        <span class="pix-demo-label">VALOR DE TESTE</span>
+      </div>
+
+      <div class="pix-qr-wrap">
+        <div class="pix-qr" id="pix-qr">
+          <span class="pix-qr-placeholder">
+            QR Code<br />
+            demonstrativo<br />
+            <strong>Integre seu gateway</strong>
+          </span>
+        </div>
+        <p class="pix-caption" style="margin-top: 12px">
+          O QR Code real será exibido após criar a cobrança.
+        </p>
+      </div>
+
+      <ol class="pix-steps">
+        <li>
+          <span class="pix-step-number">1</span>
+          <span>Abra o aplicativo do seu banco.</span>
+        </li>
+        <li>
+          <span class="pix-step-number">2</span>
+          <span>Escolha Pix e selecione “Ler QR Code” ou “Pix Copia e Cola”.</span>
+        </li>
+        <li>
+          <span class="pix-step-number">3</span>
+          <span>Confira o beneficiário e o valor antes de confirmar.</span>
+        </li>
+        <li>
+          <span class="pix-step-number">4</span>
+          <span>Aguarde a confirmação real do gateway de pagamento.</span>
+        </li>
+      </ol>
+
+      <div class="pix-code-box">
+        <label class="pix-code-label" for="pix-code">
+          PIX COPIA E COLA
+        </label>
+        <textarea
+          class="pix-code"
+          id="pix-code"
+          rows="3"
+          readonly
+          placeholder="O código Pix será disponibilizado pelo gateway."
+        ></textarea>
+      </div>
+
+      <button type="button" class="pix-copy" id="pix-copy">
+        ▣ Copiar código Pix
+      </button>
+
+      <div
+        class="pix-status"
+        id="pix-status"
+        role="status"
+        aria-live="polite"
+        data-state="pending"
+      >
+        Aguardando integração com o gateway.
+      </div>
+    </div>
+
+    <footer class="pix-footer">
+      Demonstração de interface · Nenhum pagamento é processado
+      por este código.
+    </footer>
+  </section>
+</div>
+
+<script>
+(function () {
+  const root = document.getElementById("pix-demo");
+  if (!root) return;
+
+  const openButton = root.querySelector("#pix-open");
+  const guide = root.querySelector("#pix-guide");
+  const copyButton = root.querySelector("#pix-copy");
+  const codeField = root.querySelector("#pix-code");
+  const status = root.querySelector("#pix-status");
+
+  openButton.addEventListener("click", function () {
+    const isOpening = guide.hidden;
+    guide.hidden = !isOpening;
+    openButton.setAttribute("aria-expanded", String(isOpening));
+
+    if (isOpening) {
+      guide.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest"
+      });
+    }
+  });
+
+  copyButton.addEventListener("click", async function () {
+    const code = codeField.value.trim();
+
+    if (!code) {
+      status.textContent =
+        "Modo demonstrativo: conecte o gateway para disponibilizar o código Pix.";
+      status.dataset.state = "pending";
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(code);
+    } catch (error) {
+      codeField.focus();
+      codeField.select();
+
+      const copied = document.execCommand("copy");
+
+      if (!copied) {
+        status.textContent =
+          "Selecione e copie o código manualmente.";
+        status.dataset.state = "pending";
+        return;
+      }
+    }
+
+    status.textContent = "Código copiado. Confira os dados no aplicativo do banco.";
+    status.dataset.state = "success";
+  });
+
+  /*
+   * INTEGRAÇÃO FUTURA:
+   * 1. Envie a solicitação ao seu backend.
+   * 2. O backend cria a cobrança no gateway.
+   * 3. Preencha o código Pix retornado em codeField.value.
+   * 4. Exiba a imagem do QR Code retornada pelo gateway.
+   * 5. Atualize o status somente após confirmação autenticada
+   *    do gateway, validada no servidor.
+   *
+   * Não coloque chaves secretas da API neste JavaScript.
+   */
+})();
+</script>
+
 </body>
 </html>
