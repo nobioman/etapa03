@@ -561,7 +561,7 @@ function showTyping() {
 
   const typing = document.createElement("div");
   typing.className = "typing";
-  typing.setAttribute("aria-label", "Digitando");
+  typing.setAttribute("aria-label", "");
 
   for (let i = 0; i < 3; i++) {
     const dot = document.createElement("span");
@@ -570,7 +570,7 @@ function showTyping() {
   }
 
   const caption = document.createElement("span");
-  caption.textContent = "Digitando…";
+  caption.textContent = "";
   caption.style.marginLeft = "5px";
 
   typing.appendChild(caption);
