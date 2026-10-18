@@ -459,48 +459,46 @@ const flow = {
   },
   bloco9: {
     messages: [
-      "XXXXXX: XXXXXXX XX XXXXXX XXX XXXXX XXXXXXXX.",
-      "XXXXX XXXXXXXX: XXXXX XXXXX XXXXXXXX.",
-      "XXXXXXX XX XXXX: XXX, XXXX XXXXXXX."
+      "Nosso programa não se responsabiliza caso você informe a Chave PIX errada.",
+      "Certifique que chave inseriad está correta!",
     ],
-    choices: [{ label: "XXXXXXXX", next: "bloco10" }],
+    choices: [{ label: "Sim, está correto.", next: "bloco10" }],
     pauseAfter: 3000
   },
   bloco10: {
     messages: [
-      "XXXXXXX XXXXXX XXXXXXXX XXXXXXXX XXXXXXXXX XXXXXX XXXXX..."
+      "Aguarde alguns segundos, estamos cadastrando sua chave PIX no sistema..."
     ],
-    choices: [{ label: "XXXXXXXX", next: "bloco11" }],
+    choices: [{ label: "Pronto", next: "bloco11" }],
     pauseAfter: 4000
   },
   bloco11: {
     messages: [
-      "XXXXXXXX XXXXXXXX XXX XXXXXXXX!",
-      "XXXXX: XXXXXXXXX@XXXXXXXXXXXXXXX.XXX",
-      "XXXXXX: XXXXXXXXXXXXX XXXXXXXX"
+      "Sua chave PIX foi cadastrada com sucesso!",
+      "Chave:",
+      "Status: APROVADO "
     ],
-    choices: [{ label: "XXXXXXXX", next: "bloco12" }]
+    choices: [{ label: "RECEBER COMPROVANTE AGORA MESMO", next: "bloco12" }]
   },
   bloco12: {
     messages: [
-      "XXXXX XX XXXXXXX XXXXXXX XXXX XXXXXXXX XXXXXXXXXXX.",
-      "XXXXXXX XX XXXX: XXXXXXX XXXXXXXXX XXXX XXXXX"
+      "Clique no botão abaixo para confirmar e liberar o envio dos seus valores a receber imediatamente.",
     ],
-    choices: [{ label: "XXXXXXXX", next: "bloco13" }],
+    choices: [{ label: "Continuar", next: "bloco13" }],
     pauseAfter: 3000
   },
   bloco13: {
-    messages: ["XXXXXXXXXX XX XXXXXXXX — XXXXXXXX"],
+    messages: ["Gerando seu comprovante oficial de recebimento..."],
     imagePlaceholder: "ADICIONAR IMAGEM DO COMPROVANTE AQUI",
     card: {
-      title: "XXXXXXXXXX XX XXXXXXXX — XXXXXXXX",
+      title: "Valores Esquecidos",
       lines: [
-        "XXXXX XXXXXXXXX: R$ X.XXX,XX",
-        "XXXXX XXX: XXXXXXXXX@XXXXXXXXXXXXXXX.XXX",
-        "XXXXX: XXXXXXX XXXXXXXX XXXXX XXXXXXXX"
+        "Valor disponível para saque: R$ 4.960,50",
+        "Chave Pix: ",
+        "Imposto de Saque IOF BANCO do Brasil: R$ 39,99"
       ]
     },
-    choices: [{ label: "XXXXXXXX", next: "bloco14" }]
+    choices: [{ label: "Resposta lead: Porque tenho que pagar este imposto ?", next: "bloco14" }]
   },
   bloco14: {
     messages: [
