@@ -518,8 +518,7 @@ messages: [
     pauseAfter: 3000
   },
   bloco13: {
-    messages: ["Gerando seu comprovante oficial de recebimento..."
-    ],
+    messages: ["Gerando seu comprovante oficial de recebimento..."],
     imageSrc: "./images/comprovante.png",
 imageAlt: "Comprovante fictício para fins educativos",
     
@@ -528,7 +527,7 @@ card: {
   lines: [
     "Valor ilustrativo: R$ 4.960,50",
     () => `Chave Pix informada: ${chavePixCadastrada || "Não informada"}`,
-    "Status: APROVADO"
+    "Status: SIMULAÇÃO EDUCATIVA"
   ]
 },
 
@@ -633,19 +632,15 @@ function addCard(card) {
   card.lines.forEach(line => {
     const item = document.createElement("li");
     item.style.marginTop = "6px";
-    const texto = typeof line === "function" ? line() : line;
+    item.textContent =
+  typeof line === "function" ? line() : line;
+    list.appendChild(item);
+  });
 
-if (texto === "Status: APROVADO") {
-  item.textContent = "Status: ";
-
-  const aprovado = document.createElement("span");
-  aprovado.textContent = "APROVADO";
-  aprovado.style.color = "#2E9439";
-  aprovado.style.fontWeight = "bold";
-
-  item.appendChild(aprovado);
-} else {
-  item.textContent = texto;
+  wrapper.appendChild(list);
+  message.appendChild(wrapper);
+  chat.appendChild(message);
+  scrollToLatest();
 }
 
 
