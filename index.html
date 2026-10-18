@@ -867,5 +867,84 @@ restartButton.addEventListener("click", start);
 
 start();
 </script>
+
+<style>
+  /* Linha da mensagem com a mini logo */
+  .bot-message-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    width: 100%;
+    animation: appear .22s ease-out both;
+  }
+
+  /* Foto de perfil circular */
+  .bot-avatar {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #EC0075;
+    background: #fff;
+    flex-shrink: 0;
+  }
+
+  /* Ajuste da largura da mensagem */
+  .bot-message-row .message.bot {
+    max-width: calc(90% - 40px);
+    margin: 0;
+  }
+</style>
+
+<script>
+(() => {
+  const AVATAR = "./images/perfil.png";
+
+  // Adiciona a mini logo às mensagens do bot
+  function addAvatarToMessage(message) {
+    if (!message || !message.classList.contains("bot")) return;
+
+    // Evita adicionar a mesma logo duas vezes
+    if (message.parentElement?.classList.contains("bot-message-row")) return;
+
+    const row = document.createElement("div");
+    row.className = "bot-message-row";
+
+    const avatar = document.createElement("img");
+    avatar.className = "bot-avatar";
+    avatar.src = AVATAR;
+    avatar.alt = "Perfil do atendimento";
+    avatar.width = 32;
+    avatar.height = 32;
+
+    avatar.addEventListener("error", () => {
+      avatar.style.display = "none";
+    });
+
+    message.parentNode.insertBefore(row, message);
+    row.append(avatar, message);
+  }
+
+  // Observa mensagens novas adicionadas ao chat
+  const chat = document.querySelector("#chat");
+  if (!chat) return;
+
+  function processMessages() {
+    chat.querySelectorAll(".message.bot").forEach(addAvatarToMessage);
+  }
+
+  processMessages();
+
+  const observer = new MutationObserver(processMessages);
+  observer.observe(chat, {
+    childList: true,
+    subtree: true
+  });
+})();
+</script>
+</body>
+</html>
+
 </body>
 </html>
