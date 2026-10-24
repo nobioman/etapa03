@@ -593,35 +593,35 @@ function scrollToLatest() {
 function addMessage(text, who = "bot") {
   const message = document.createElement("div");
   message.className = `message ${who}`;
-  message.textContent = text;
-  chat.appendChild(message);
-  scrollToLatest();
-  return message;
-}
 
-function showTyping() {
-  const message = document.createElement("div");
-  message.className = "message bot";
+  if (typeof text === "object" && text !== null) {
+    const conteudo = text.text ?? "";
+    const destaque = text.highlight;
 
-  const typing = document.createElement("div");
-  typing.className = "typing";
-  typing.setAttribute("aria-label", "");
+    if (destaque && conteudo.includes(destaque)) {
+      const partes = conteudo.split(destaque);
 
-  for (let i = 0; i < 3; i++) {
-    const dot = document.createElement("span");
-    dot.setAttribute("aria-hidden", "true");
-    typing.appendChild(dot);
+      message.appendChild(
+        document.createTextNode(partes[0])
+      );
+
+      const span = document.createElement("span");
+      span.textContent = destaque;
+      span.style.color = text.color || "#2E9439";
+      message.appendChild(span);
+
+      message.appendChild(
+        document.createTextNode(partes.slice(1).join(destaque))
+      );
+    } else {
+      message.textContent = conteudo;
+    }
+  } else {
+    message.textContent = text;
   }
 
-  const caption = document.createElement("span");
-  caption.textContent = "";
-  caption.style.marginLeft = "5px";
-
-  typing.appendChild(caption);
-  message.appendChild(typing);
   chat.appendChild(message);
   scrollToLatest();
-
   return message;
 }
 
