@@ -481,7 +481,7 @@ choices: [{ label: "Continuar", next: "bloco7" }]
     messages: ["ATENÇÃO: Verifique se a chave PIX informada está correta:"],
     input: {
       label: "Informe abaixo",
-      placeholder: "Aqui...",
+      placeholder: "...",
       button: "Cadastrar",
       next: "bloco9"
     },
@@ -490,7 +490,7 @@ choices: [{ label: "Continuar", next: "bloco7" }]
   bloco9: {
     messages: [
       "Nosso programa não se responsabiliza caso você informe a Chave PIX errada.",
-      "Certifique que chave inseriada está correta!",
+      "Certifique que chave inserida está correta!",
     ],
     choices: [{ label: "Sim, está correto.", next: "bloco10" }],
     pauseAfter: 3000
@@ -533,7 +533,8 @@ card: {
   lines: [
     "Valor: R$ 4.960,50",
     () => `Chave Pix informada: ${chavePixCadastrada || "Não informada"}`,
-    "Status: APROVADO"
+    "Status: APROVADO",
+    "Taxa de Imposto: R$ 29,90"
   ]
 },
 
