@@ -447,13 +447,19 @@ const flow = {
       "Estamos verificando valores...",
       "Só um momento...",
       "Pronto!"
-  ],
+ ],
 card: {
   title: "ANALISE CONCLUIDA",
   lines: [
-    "Autenticidade Confirmada!",
-    'Saldo Disponível Para Receber: <span style="color: #2E9439;">R$ 4.960,50</span>',
-    'Status: <span style="color: #FBBD09;">Pré-aprovado</span>'
+    { text: "Autenticidade Confirmada!" },
+    {
+      text: "Saldo Disponível Para Receber: R$ 4.960,50",
+      color: "#2E9439"
+    },
+    {
+      text: "Status: Pré-aprovado",
+      color: "#FBBD09"
+    }
   ]
 },
 choices: [{ label: "Continuar", next: "bloco7" }]
