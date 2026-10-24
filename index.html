@@ -638,24 +638,30 @@ function addCard(card) {
   list.style.margin = "7px 0 0";
 
   card.lines.forEach(line => {
+    const item = document.createElement("li");
+    item.style.marginTop = "6px";
+
     if (typeof line === "object" && line !== null) {
-  const texto = line.text ?? "";
-  const destaque = line.highlight;
+      item.textContent = line.text ?? "";
+      if (line.color) {
+        item.style.color = line.color;
+      }
+    } else {
+      const texto =
+        typeof line === "function" ? line() : line;
 
-  if (destaque && texto.includes(destaque)) {
-    const partes = texto.split(destaque);
-    item.append(document.createTextNode(partes[0]));
+      if (texto === "Status: APROVADO") {
+        item.append("Status: ");
 
-    const span = document.createElement("span");
-    span.textContent = destaque;
-    span.style.color = line.color;
-    item.appendChild(span);
-
-    item.append(document.createTextNode(partes.slice(1).join(destaque)));
-  } else {
-    item.textContent = texto;
-  }
-}
+        const aprovado = document.createElement("span");
+        aprovado.textContent = "APROVADO";
+        aprovado.style.color = "#2E9439";
+        aprovado.style.fontWeight = "bold";
+        item.appendChild(aprovado);
+      } else {
+        item.textContent = texto ?? "";
+      }
+    }
 
     list.appendChild(item);
   });
