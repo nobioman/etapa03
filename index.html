@@ -481,7 +481,7 @@ choices: [{ label: "Continuar", next: "bloco7" }]
     messages: ["ATENÇÃO: Verifique se a chave PIX informada está correta:"],
     input: {
       label: "Informe abaixo",
-      placeholder: "aqui...",
+      placeholder: "Aqui...",
       button: "Cadastrar",
       next: "bloco9"
     },
@@ -507,7 +507,11 @@ choices: [{ label: "Continuar", next: "bloco7" }]
 messages: [
   "Sua chave PIX foi cadastrada com sucesso!",
   () => `Chave Pix: ${chavePixCadastrada || "Não informada"}`,
-  "Status: Cadastrada com Sucesso"
+  {
+    text: "Status: Cadastrada com Sucesso",
+    highlight: "Cadastrada com Sucesso",
+    color: "#2E9439"
+  }
 ],
 
     choices: [{ label: "RECEBER COMPROVANTE AGORA MESMO", next: "bloco12" }]
