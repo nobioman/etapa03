@@ -594,7 +594,32 @@ function scrollToLatest() {
 function addMessage(text, who = "bot") {
   const message = document.createElement("div");
   message.className = `message ${who}`;
-  message.textContent = text;
+  if (typeof text === "object" && text !== null) {
+  const conteudo = text.text ?? "";
+  const destaque = text.highlight;
+
+  if (destaque && conteudo.includes(destaque)) {
+    const partes = conteudo.split(destaque);
+
+    message.appendChild(
+      document.createTextNode(partes[0])
+    );
+
+    const span = document.createElement("span");
+    span.textContent = destaque;
+    span.style.color = text.color || "#2E9439";
+
+    message.appendChild(span);
+
+    message.appendChild(
+      document.createTextNode(partes.slice(1).join(destaque))
+    );
+  } else {
+    message.textContent = conteudo;
+  }
+} else {
+  message.textContent = text ?? "";
+}
   chat.appendChild(message);
   scrollToLatest();
   return message;
