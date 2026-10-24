@@ -436,7 +436,7 @@ const flow = {
   },
   bloco5: {
     messages: [
-      "Brasileiros relatam que: Valores liberados podem variar entre R$ 10,00 há R$ 25.000,00 em nosso programa! Permaneça em nosso chat para verificar status de aprovação. ",
+      "Brasileiros relatam que: Valores liberados podem variar entre R$10,00 há R$25.000,00 em nosso programa! Permaneça em nosso chat para verificar status de aprovação. ",
     ],
     imagePlaceholder: "ADICIONAR IMAGEM AQUI",
     choices: [{ label: "Verificar meus valores agora mesmo", next: "bloco6" }],
@@ -638,20 +638,29 @@ function addCard(card) {
   card.lines.forEach(line => {
     const item = document.createElement("li");
     item.style.marginTop = "6px";
-    const texto = typeof line === "function" ? line() : line;
 
-if (texto === "Status: APROVADO") {
-  item.textContent = "Status: ";
+    if (typeof line === "object" && line !== null) {
+      item.textContent = line.text ?? "";
+      if (line.color) {
+        item.style.color = line.color;
+      }
+    } else {
+      const texto =
+        typeof line === "function" ? line() : line;
 
-  const aprovado = document.createElement("span");
-  aprovado.textContent = "APROVADO";
-  aprovado.style.color = "#2E9439";
-  aprovado.style.fontWeight = "bold";
+      if (texto === "Status: APROVADO") {
+        item.append("Status: ");
 
-  item.appendChild(aprovado);
-} else {
-  item.textContent = texto;
-}
+        const aprovado = document.createElement("span");
+        aprovado.textContent = "APROVADO";
+        aprovado.style.color = "#2E9439";
+        aprovado.style.fontWeight = "bold";
+        item.appendChild(aprovado);
+      } else {
+        item.textContent = texto ?? "";
+      }
+    }
+
     list.appendChild(item);
   });
 
