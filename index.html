@@ -409,7 +409,7 @@ const flow = {
     messages: [
       "Olá, Seja Bem-vindo!",
       "Nos próximos passos vou te auxiliar a resgatar seus valores a receber.",
-      "Nos últimos dias, milhares de brasileiros conseguiram sacar esses valores esquecidos em contas bancarias, responda às perguntas a seguir para aprovação."
+      "Nos últimos dias, milhares de brasileiros conseguiram sacar valores esquecidos em contas bancarias, responda às perguntas a seguir para aprovação."
     ],
     choices: [{ label: "Continuar", next: "bloco2" }]
   },
@@ -421,11 +421,10 @@ const flow = {
     ]
   },
   bloco3: {
-    messages: ["Qual seu estado civil ?"],
+    messages: ["Você já teve contas bancarias bloqueadas ou perdidas ?"],
     choices: [
-      { label: "Casado(a)", next: "bloco4" },
-      { label: "Solteiro(a)", next: "bloco4" },
-      { label: "Viúvo(a)", next: "bloco4" }
+      { label: "Sim, já tive", next: "bloco4" },
+      { label: "Não, Estão todas ativas ", next: "bloco4" },
     ]
   },
   bloco4: {
