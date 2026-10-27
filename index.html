@@ -442,30 +442,35 @@ const flow = {
     choices: [{ label: "Verificar meus valores agora mesmo", next: "bloco6" }],
     pauseAfter: 7000
   },
-  bloco6: {
-    messages: [
-      "Estamos verificando valores...",
-      "Só um momento...",
-      "Pronto!"
- ],
-card: {
-  title: "ANALISE CONCLUIDA",
-  lines: [
-    { text: "Autenticidade Confirmada!" },
-    {
-      text: "Saldo Disponível Para Receber: R$ 4.960,50",
-      highlight: "R$ 4.960,50",
-      color: "#2E9439"
-    },
-    {
-      text: "Status: Pré-aprovado",
-      highlight: "Pré-aprovado",
-      color: "#FBBD09"
-    }
+
+
+bloco6: {
+  messages: [
+    "Estamos verificando os dados informados...",
+    "Só um momento, a análise está em andamento...",
+    "Etapa de demonstração concluída!"
+  ],
+
+  card: {
+    title: "RESULTADO DA SIMULAÇÃO",
+    lines: [
+      { text: "Esta é uma demonstração ilustrativa." },
+      { text: "Nenhum saldo real foi consultado ou confirmado." }
+    ]
+  },
+
+  // Caminho da imagem que aparecerá abaixo do resultado.
+  imageSrc: "./images/resultado.png",
+  imageAlt: "Imagem ilustrativa do resultado",
+
+  // Aguarda 8 segundos antes de exibir o próximo item.
+  pauseAfter: 8000,
+
+  choices: [
+    { label: "Continuar", next: "bloco7" }
   ]
 },
-choices: [{ label: "Continuar", next: "bloco7" }]
-  },
+
   bloco7: {
     messages: [
       "Acabamos de salvar e verificar suas informações com sucesso! Iremos iniciar a etapa da sua Indenização e chave Pix.",
