@@ -1002,6 +1002,13 @@ function choose(choice) {
     typing.remove();
     renderStep(choice.next);
   }, 650, token);
+} function start() {
+  clearTimers();
+  stepToken++;
+  chat.replaceChildren();
+  options.replaceChildren();
+  options.hidden = true;
+  renderStep("bloco1");
 }
 
   clearTimers();
