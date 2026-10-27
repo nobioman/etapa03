@@ -461,7 +461,7 @@ bloco6: {
 
   // Caminho da imagem que aparecerá abaixo do resultado.
   imageSrc: "./images/resultado.png",
-  imageAlt: "Imagem ilustrativa do resultado",
+  imageAlt: "",
 
   // Aguarda 8 segundos antes de exibir o próximo item.
   pauseAfter: 8000,
@@ -870,7 +870,7 @@ function renderStep(key) {
     }
 
     const typing = showTyping();
-    const delay = Math.min(1600, 550 + step.messages[index].length * 9);
+    const delay = key === "bloco6" ? 8000 : Math.min(1600, 550 + step.messages[index].length * 9);
 
     schedule(() => {
       typing.remove();
