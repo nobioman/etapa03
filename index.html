@@ -450,7 +450,7 @@ bloco6: {
     "Só um momento, a análise está em andamento...",
     "Resultado de análise concluída!"
   ],
-  
+
 
   // Caminho da imagem que aparecerá abaixo do resultado.
   imageSrc: "./images/resultado.png",
@@ -475,16 +475,23 @@ bloco6: {
       { label: "E-mail", next: "bloco8" }
     ]
   },
-  bloco8: {
-    messages: ["ATENÇÃO: Verifique se a chave PIX informada está correta:"],
-    input: {
-      label: "Informe abaixo",
-      placeholder: "...",
-      button: "Cadastrar",
-      next: "bloco9"
-    },
-    
+
+ 
+bloco8: {
+  messages: [
+    "ATENÇÃO: Confira se a informação digitada está correta:"
+  ],
+
+  input: {
+    label: "Informe abaixo",
+    placeholder: "...",
+    button: "Continuar",
+    next: "bloco9"
   },
+
+  choices: []
+},
+
   bloco9: {
     messages: [
       "Nosso programa não se responsabiliza caso você informe a Chave PIX errada.",
@@ -784,6 +791,49 @@ function renderChoices(step, token) {
     label.textContent = step.input.label;
 
     const input = document.createElement("input");
+const tipoChave = sessionStorage.getItem("tipoChavePix") || "";
+
+if (tipoChave === "CPF") {
+  input.placeholder = "000.000.000-00";
+  input.inputMode = "numeric";
+
+  input.addEventListener("input", () => {
+    let valor = input.value.replace(/\D/g, "").slice(0, 11);
+
+    valor = valor.replace(/(\d{3})(\d)/, "$1.$2");
+    valor = valor.replace(/(\d{3})(\d)/, "$1.$2");
+    valor = valor.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+
+    input.value = valor;
+  });
+
+} else if (tipoChave === "Número de Telefone") {
+  input.placeholder = "(00) 00000-0000";
+  input.inputMode = "tel";
+
+  input.addEventListener("input", () => {
+    let valor = input.value.replace(/\D/g, "").slice(0, 11);
+
+    if (valor.length > 0) {
+      valor = "(" + valor;
+    }
+
+    if (valor.length > 3) {
+      valor = valor.slice(0, 3) + ") " + valor.slice(3);
+    }
+
+    if (valor.replace(/\D/g, "").length > 7) {
+      valor = valor.replace(/(\d{5})(\d{1,4})$/, "$1-$2");
+    }
+
+    input.value = valor;
+  });
+
+} else if (tipoChave === "E-mail") {
+  input.placeholder = "exemplo@e-mail.com.br";
+  input.inputMode = "email";
+  input.type = "email";
+}
     input.className = "demo-input";
     input.type = "text";
     input.placeholder = step.input.placeholder;
@@ -921,6 +971,11 @@ function choose(choice) {
   clearTimers();
 
   addMessage(choice.label, "user");
+// Guarda a opção escolhida no Bloco 7.
+if (flow.bloco7.choices.includes(choice)) {
+  sessionStorage.setItem("tipoChavePix", choice.label);
+}
+```
   options.replaceChildren();
   options.hidden = true;
 
