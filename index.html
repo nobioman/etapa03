@@ -406,12 +406,19 @@ const restartButton = document.querySelector("#restart");
 
 const flow = {
   bloco1: {
-    messages: [
-      "Olá, Seja Bem-vindo!",
-      "Nos próximos passos vou te auxiliar a resgatar seus valores a receber.",
-      "Nos últimos dias, milhares de brasileiros conseguiram sacar valores esquecidos em contas bancarias, responda às perguntas a seguir para aprovação."
-    ],
-    choices: [{ label: "Continuar", next: "bloco2" }]
+  messages: [
+    "Olá, Seja Bem-vindo!",
+    "Nos próximos passos vou te auxiliar a resgatar seus valores a receber.",
+    "Nos últimos dias, milhares de brasileiros conseguiram sacar valores esquecidos em contas bancarias, responda às perguntas a seguir para aprovação."
+  ],
+
+  imageSrc: "./images/sorriso.png",
+  imageAlt: "Imagem ilustrativa do atendimento",
+
+  choices: [
+    { label: "Continuar", next: "bloco2" }
+  ]
+
   },
   bloco2: {
     messages: ["Você já teve consultas recentes em nosso APP ou Site ?"],
